@@ -9,18 +9,18 @@ public class MyVisual extends Visual {
     int mode = 0;
 
     public void settings() {
-        size(1024, 500);
+        //size(1024, 500);
 
         // Use this to make fullscreen
         // fullScreen();
 
         // Use this to make fullscreen and use P3D for 3D graphics
-        // fullScreen(P3D, SPAN);
+        fullScreen(P3D, SPAN);
     }
 
     public void setup() {
         startMinim();
-
+        colorMode(HSB);
         // Call loadAudio to load an audio file to process
         loadAudio("song.mp3");
 
@@ -62,7 +62,23 @@ public class MyVisual extends Visual {
                 break;
             case 1: 
             {
-                new CubeVisual();
+                float angle = 0;
+                background(0);
+                calculateAverageAmplitude();
+                stroke(map(getSmoothedAmplitude(), 0, 1, 0, 255), 255, 255);
+                strokeWeight(5);
+                noFill();
+                lights();
+                pushMatrix();
+                
+                camera(0, 0, 0, 0, 0, -1, 0, 1, 0);
+                translate(0, 0, -200);
+                rotateX(angle);
+                rotateZ(angle);       
+                float boxSize = 50 + (200 * getSmoothedAmplitude()); 
+                box(boxSize);   
+                popMatrix();
+                angle += 0.01f;
                 break;
             }             
             
