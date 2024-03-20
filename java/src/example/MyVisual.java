@@ -6,6 +6,8 @@ public class MyVisual extends Visual {
     WaveForm wf;
     AudioBandsVisual abv;
 
+    int mode = 0;
+
     public void settings() {
         size(1024, 500);
 
@@ -20,16 +22,19 @@ public class MyVisual extends Visual {
         startMinim();
 
         // Call loadAudio to load an audio file to process
-         loadAudio("song.mp3");
+        loadAudio("song.mp3");
 
         // Call this instead to read audio from the microphone
-        //startListening();
+        // startListening();
 
         wf = new WaveForm(this);
         abv = new AudioBandsVisual(this);
     }
 
     public void keyPressed() {
+        if (key >= '0' && key <= '9') {
+            mode = key - '0';
+        }
         if (key == ' ') {
             getAudioPlayer().cue(0);
             getAudioPlayer().play();
@@ -37,19 +42,32 @@ public class MyVisual extends Visual {
     }
 
     public void draw() {
-        background(0);
-        try {
-            // Call this if you want to use FFT data
-            calculateFFT();
-        } catch (VisualException e) {
-            e.printStackTrace();
-        }
-        // Call this is you want to use frequency bands
-        calculateFrequencyBands();
 
-        // Call this is you want to get the average amplitude
-        calculateAverageAmplitude();
-        wf.render();
-        abv.render();
+        switch (mode) {
+            case 0:
+                background(0);
+                try {
+                    // Call this if you want to use FFT data
+                    calculateFFT();
+                } catch (VisualException e) {
+                    e.printStackTrace();
+                }
+                // Call this is you want to use frequency bands
+                calculateFrequencyBands();
+
+                // Call this is you want to get the average amplitude
+                calculateAverageAmplitude();
+                wf.render();
+                abv.render();
+                break;
+            case 1: 
+            {
+                new CubeVisual();
+                break;
+            }             
+            
+            default:
+                break;
+        }
     }
 }
