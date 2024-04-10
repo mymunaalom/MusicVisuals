@@ -2,6 +2,7 @@ package c22305863;
 
 import ie.tudublin.Visual;
 
+
 public class iriasVisual extends Visual{
     
     public void settings()
@@ -14,7 +15,7 @@ public class iriasVisual extends Visual{
     {
         startMinim();
         //startListening();
-        loadAudio("heroplanet.mp3");
+        loadAudio("song.mp3");
         colorMode(HSB);
     }
 
