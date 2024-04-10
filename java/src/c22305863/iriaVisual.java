@@ -17,7 +17,8 @@ public class iriaVisual extends PApplet {
     int mode = 0;
 
     float[] lerpedBuffer;
-    float y = 0;
+    float y = 0; // vertical position
+    float ySpeed = 1;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
 
@@ -81,14 +82,28 @@ public class iriaVisual extends PApplet {
         background(0);
         switch (mode) {
             case 1:
-            colorMode(HSB, 360, 100, 100); // Set color mode to HSB
-            background(199, 100, 100); 
-            // Water bubble effect
-                strokeWeight(2);
-                stroke(230, 100, 100);
-                fill(230, 100, 100);
-                float bubbleSize = average * 2000;
-                ellipse(cx, cy, bubbleSize, bubbleSize);
+                colorMode(HSB, 360, 100, 100); // mode HSB
+                background(199, 100, 100);
+                // Water coconut effect
+                noStroke();
+                fill(27, 100, 29,100); 
+                float coconutSize = 100;
+                ellipse(cx, y, coconutSize, coconutSize);
+
+                // smaller circle light reflection in coconut
+                // Calculate the position of the small circle
+                float smallCircleX = cx + coconutSize / 4; // Adjust X position to be in the corner
+                float smallCircleY = y - coconutSize / 4; // Adjust Y position to be in the corner
+                float smallcoconut = 20; // Size of the small circle
+                noStroke();
+                fill(52, 100, 100,100);
+                ellipse(smallCircleX, smallCircleY, smallcoconut, smallcoconut);
+
+                // update coconut's vertical position
+                y += ySpeed;
+                if (y > height) {
+                    y = 0; // reset the coconuts position when it reaches the bottom
+                }
                 break;
 
             default:
