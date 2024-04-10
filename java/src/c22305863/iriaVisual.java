@@ -18,7 +18,7 @@ public class iriaVisual extends PApplet {
 
     float[] lerpedBuffer;
     float y = 0; // vertical position
-    float ySpeed = 1;
+    float ySpeed = 2;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
 
@@ -44,9 +44,6 @@ public class iriaVisual extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        // Uncomment this to use the microphone
-        // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        // ab = ai.mix;
         ap = minim.loadFile("song.mp3", 1024);
         ap.play();
         ab = ap.mix;
@@ -61,13 +58,12 @@ public class iriaVisual extends PApplet {
     float off = 0;
 
     public void draw() {
-        // background(0);
         float halfH = height / 2;
         float average = 0;
         float sum = 0;
         off += 1;
-        // Calculate sum and average of the samples
-        // Also lerp each element of buffer;
+        // calculate sum and average of the samples
+        // lerp each element of buffer;
         for (int i = 0; i < ab.size(); i++) {
             sum += abs(ab.get(i));
             lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
@@ -84,22 +80,41 @@ public class iriaVisual extends PApplet {
             case 1:
                 colorMode(HSB, 360, 100, 100); // mode HSB
                 background(199, 100, 100);
-                // Water coconut 
-                noStroke();
-                fill(360, 100, 36); 
+
+                // position of the coconuts
+                float coconutSpacing = 80; // spacing between coconuts
                 float coconutSize = 100;
-                ellipse(cx, y, coconutSize, coconutSize);
+                float coconutLeftX = coconutSize / 2 + 50; // left coconut
+                float coconutRightX1 = width - coconutSize / 2 - 150; // right coconut
+                float coconutRightX2 = width - coconutSize / 2; // right coconut
+                float coconutY = y;
 
-                // smaller circle light reflection in coconut
-                // Calculate the position of the small circle
-                float smallCircleX = cx + coconutSize / 4; // Adjust X position to be in the corner
-                float smallCircleY = y - coconutSize / 4; // Adjust Y position to be in the corner
-                float smallcoconut = 20; // Size of the small circle
-                noStroke();
-                fill(67, 37, 100);
-                ellipse(smallCircleX, smallCircleY, smallcoconut, smallcoconut);
+                // coconut on the left
+                // noStroke();
+                stroke(360, 100, 15);
+                fill(360, 100, 36);
+                ellipse(coconutLeftX, coconutY, coconutSize, coconutSize);
 
-                // update coconut's vertical position
+                // coconut on the right
+                ellipse(coconutRightX2, coconutY + coconutSpacing, coconutSize, coconutSize);
+                ellipse(coconutRightX1, coconutY - coconutSpacing, coconutSize, coconutSize);
+
+                // position of the small circle inside each coconut
+                float smallCircleSize = 20; // Size of the small circle
+                float smallCircleOffsetX = coconutSize / 4;
+                float smallCircleOffsetY = coconutSize / 4;
+                // draw small circles inside each coconut
+                stroke(67, 37, 2);
+                fill(67, 37, 100); // light reflection color
+
+                ellipse(coconutLeftX + smallCircleOffsetX, coconutY - smallCircleOffsetY, smallCircleSize,
+                        smallCircleSize);
+                ellipse(coconutRightX2 + smallCircleOffsetX, coconutY + coconutSpacing - smallCircleOffsetY,
+                        smallCircleSize, smallCircleSize);
+                ellipse(coconutRightX1 + smallCircleOffsetX, coconutY - coconutSpacing - smallCircleOffsetY,
+                        smallCircleSize, smallCircleSize);
+
+                // vertical position
                 y += ySpeed;
                 if (y > height) {
                     y = 0; // reset the coconuts position when it reaches the bottom
