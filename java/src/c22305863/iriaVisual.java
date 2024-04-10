@@ -84,9 +84,9 @@ public class iriaVisual extends PApplet {
             case 1:
                 colorMode(HSB, 360, 100, 100); // mode HSB
                 background(199, 100, 100);
-                // Water coconut effect
+                // Water coconut 
                 noStroke();
-                fill(27, 100, 29,100); 
+                fill(360, 100, 36); 
                 float coconutSize = 100;
                 ellipse(cx, y, coconutSize, coconutSize);
 
@@ -96,7 +96,7 @@ public class iriaVisual extends PApplet {
                 float smallCircleY = y - coconutSize / 4; // Adjust Y position to be in the corner
                 float smallcoconut = 20; // Size of the small circle
                 noStroke();
-                fill(52, 100, 100,100);
+                fill(67, 37, 100);
                 ellipse(smallCircleX, smallCircleY, smallcoconut, smallcoconut);
 
                 // update coconut's vertical position
