@@ -35,9 +35,9 @@ public class IriaVisual2 extends PApplet {
     }
 
     public void settings() {
-        //size(1024, 1000, P3D);
+        // size(1024, 1000, P3D);
         // fullScreen(P3D, SPAN);
-        size(1024, 1000 );
+        size(1024, 1000);
     }
 
     public void setup() {
@@ -80,40 +80,15 @@ public class IriaVisual2 extends PApplet {
         switch (mode) {
             case 0:
                 background(0);
-                // Code goes here
-                for (int i = 0; i < ab.size(); i++) {
-                    float hue = map(i, 0, ab.size(), 0, 256);
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 255, 255);
-                    line(i, cy - s, cy + s, i);
-                }
+
                 break;
-            case 1:
+            case 1: {
                 background(0);
-                for (int i = 0; i < ab.size(); i++) {
-                    float hue = map(i, 0, ab.size(), 0, 256);
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 255, 255);
-                    line(i, cy + smoothedAmplitude, i, cy + ab.get(i) * cy);
-                }
+
                 break;
+            }
             case 2: {
                 background(0);
-                for (int i = 0; i < ab.size(); i++) {
-                    lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
-                    float hue = map(i, 0, ab.size(), 0, 256);
-                    float s = lerpedBuffer[i] * cx * 2;
-
-                    // from left side to right
-                    stroke(hue, 255, 255);
-                    line(0, i, s, i);
-                    // from right side to left
-                    line(width, i, width - s, i);
-                    // from top to bottom
-                    line(i, 0, i, s);
-                    // from bottom to top
-                    line(i, height, i, height - s);
-                }
                 break;
             }
 

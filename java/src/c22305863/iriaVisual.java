@@ -37,9 +37,9 @@ public class iriaVisual extends PApplet {
     }
 
     public void settings() {
-        size(1024, 1000, P3D);
+        size(1024, 600, P3D);
         // fullScreen(P3D, SPAN);
-        // size(1024, 1000);
+        // size(1024,700);
     }
 
     public void setup() {
@@ -104,7 +104,7 @@ public class iriaVisual extends PApplet {
                 float smallCircleOffsetX = coconutSize / 4;
                 float smallCircleOffsetY = coconutSize / 4;
                 // draw small circles inside each coconut
-                stroke(67, 37, 2);
+                stroke(67, 37, 56);
                 fill(67, 37, 100); // light reflection color
 
                 ellipse(coconutLeftX + smallCircleOffsetX, coconutY - smallCircleOffsetY, smallCircleSize,
@@ -120,6 +120,32 @@ public class iriaVisual extends PApplet {
                     y = 0; // reset the coconuts position when it reaches the bottom
                 }
                 break;
+            case 2: {
+                colorMode(HSB, 360, 100, 100); // mode HSB
+                background(199, 100, 100);
+
+                // small circle inside leaf
+                //fill(39, 100, 100);
+                //stroke(285, 100, 75);
+                //circle(512, 300, average * cy * 5);
+                for (int i = 0; i < ab.size(); i++) {
+
+                    float hue = map(i, 0, ab.size(), 0, 256);
+                    float s = lerpedBuffer[i] * cx;
+                    stroke(hue, 255, 300);
+                    noFill();
+                    circle(512, 300, average * cy * 5);
+                    //line(cy * s, i * s, s, ab.get(i) + s * 100);
+                    line(512, 300, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
+
+                }
+
+                
+
+               
+
+                break;
+            }
 
             default:
                 break;
