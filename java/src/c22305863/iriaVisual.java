@@ -44,7 +44,7 @@ public class iriaVisual extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        ap = minim.loadFile("song.mp3", 1024);
+        ap = minim.loadFile("Squidward's Tiki Land     Psy-Trance Remix.mp3", 1024);
         ap.play();
         ab = ap.mix;
         colorMode(HSB);
