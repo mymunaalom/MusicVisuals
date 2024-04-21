@@ -145,21 +145,29 @@ public class iriaVisual extends PApplet {
                 noStroke();
                 circle(512, 300, average * cy * 5);
 
+
+                //draw palm trees 
+                fill(35,100,58);
+                stroke(35,100,58);
+                // sphere(50);
+
+
+
                 break;
             case 2: {
                
                 
-                for (int i = 0; i < ab.size(); i++) {
+                // for (int i = 0; i < ab.size(); i++) {
 
-                    float hue = map(i, 0, ab.size(), 0, 256);
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 255, 300);
-                    noFill();
-                    circle(512, 300, average * cy * 5);
-                    // line(cy * s, i * s, s, ab.get(i) + s * 100);
-                    line(512, 300, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
+                //     float hue = map(i, 0, ab.size(), 0, 256);
+                //     float s = lerpedBuffer[i] * cx;
+                //     stroke(hue, 255, 300);
+                //     noFill();
+                //     circle(512, 300, average * cy * 5);
+                //     // line(cy * s, i * s, s, ab.get(i) + s * 100);
+                //     line(512, 300, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
 
-                }
+                // }
                 break;
             }
             
