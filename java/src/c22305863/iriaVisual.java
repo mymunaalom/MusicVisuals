@@ -126,15 +126,29 @@ public class iriaVisual extends PApplet {
                 if (y > height) {
                     y = 0; // reset the coconuts position when it reaches the bottom
                 }
+
+                
+                 
+                for (int i = 0; i < ab.size(); i++) {
+
+                    float hue = map(i, 0, ab.size(), 0, 121);
+                    float s = lerpedBuffer[i] * cx;
+                     stroke(hue, 255, 300);
+                    // noFill();
+                    // circle(512, 300, average * cy * 5);
+                    // line(cy * s, i * s, s, ab.get(i) + s * 100);
+                    line(512, 300, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
+
+                }
+
+                fill(289,100,100);
+                noStroke();
+                circle(512, 300, average * cy * 5);
+
                 break;
             case 2: {
-                colorMode(HSB, 360, 100, 100); // mode HSB
-                background(199, 100, 100);
-
-                // small circle inside leaf
-                // fill(39, 100, 100);
-                // stroke(285, 100, 75);
-                // circle(512, 300, average * cy * 5);
+               
+                
                 for (int i = 0; i < ab.size(); i++) {
 
                     float hue = map(i, 0, ab.size(), 0, 256);
@@ -148,50 +162,8 @@ public class iriaVisual extends PApplet {
                 }
                 break;
             }
-            case 3: {
-                background(255);
-                translate(width / 2, height / 2, -200); // Center the cube
-                rotateY(frameCount * 0.01f); // Rotate the cube
-
-                // Define the vertices of the cube
-                float r = 100;
-                beginShape(QUADS);
-                // Front face
-                texture(tikiface);
-                vertex(-r, -r, -r, 0, 0);
-                vertex(r, -r, -r, 1, 0);
-                vertex(r, r, -r, 1, 1);
-                vertex(-r, r, -r, 0, 1);
-                // Back face
-                vertex(r, -r, r, 0, 0);
-                vertex(-r, -r, r, 1, 0);
-                vertex(-r, r, r, 1, 1);
-                vertex(r, r, r, 0, 1);
-                // Top face
-                vertex(-r, -r, -r, 0, 0);
-                vertex(-r, -r, r, 1, 0);
-                vertex(r, -r, r, 1, 1);
-                vertex(r, -r, -r, 0, 1);
-                // Bottom face
-                vertex(-r, r, r, 0, 0);
-                vertex(-r, r, -r, 1, 0);
-                vertex(r, r, -r, 1, 1);
-                vertex(r, r, r, 0, 1);
-                // Right face
-                vertex(r, -r, -r, 0, 0);
-                vertex(r, -r, r, 1, 0);
-                vertex(r, r, r, 1, 1);
-                vertex(r, r, -r, 0, 1);
-                // Left face
-                vertex(-r, -r, r, 0, 0);
-                vertex(-r, -r, -r, 1, 0);
-                vertex(-r, r, -r, 1, 1);
-                vertex(-r, r, r, 0, 1);
-                endShape();
-
-                break;
-            }
-
+            
+            
             default:
                 break;
         }
