@@ -86,7 +86,7 @@ public class iriaVisual extends PApplet {
         switch (mode) {
             case 1:
                 colorMode(HSB, 360, 100, 100); // mode HSB
-                background(199, 100, 100);
+                background(209,100,52);
 
                 // position of the coconuts
                 float coconutSpacing = 80; // spacing between coconuts
@@ -141,15 +141,23 @@ public class iriaVisual extends PApplet {
 
                 }
 
-                fill(289,100,100);
-                noStroke();
-                circle(512, 300, average * cy * 5);
+                float arcRadius = width / ab.size()*8; // Adjust this value to control the radius
 
+                for (int i = 0; i < ab.size(); i++) {
+                float hue = map(i, 0, ab.size(), 0, 360);
+                float s = lerpedBuffer[i] * arcRadius; // Adjust scaling based on preference
+                float angleOffset = TWO_PI / 3.0f * i; // Calculate angle offset for each arc
 
-                //draw palm trees 
-                fill(35,100,58);
-                stroke(35,100,58);
-                // sphere(50);
+                // Calculate starting and ending angles for each arc (120 degrees each)
+                float startAngle = angleOffset;
+                float endAngle = startAngle + TWO_PI / 3.0f;
+
+                // Draw the arc
+                stroke(hue, 100, 100);
+                noFill();
+                arc(cx, cy, arcRadius, arcRadius, startAngle, endAngle);
+                }
+
 
 
 
