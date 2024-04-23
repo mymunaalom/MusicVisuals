@@ -17,7 +17,7 @@ public class iriaVisual extends PApplet {
     AudioInput ai;
     AudioBuffer ab;
 
-    int mode = 0; // default mode for switch statement
+    int mode = 0;// default mode for switch statement
 
     float[] lerpedBuffer;
     float y = 0; // vertical position
@@ -67,7 +67,7 @@ public class iriaVisual extends PApplet {
         y = height / 2;
         smoothedY = y;
 
-        tikiface = loadImage("tiki_face.png");
+        tikiface = loadImage("tiki_face2.png");
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
@@ -78,34 +78,46 @@ public class iriaVisual extends PApplet {
     public void reactToMouseMovement() {
         // make coconuts appear on screen when clicked by mouse
         if (mousePressed) {
-            coconuts.add(new Coconut(mouseX, mouseY)); // create new coconuts + add to list
+            coconuts.add(new Coconut(mouseX, mouseY));// create new coconuts + add to list
         }
     }
 
     class Coconut {
-        // position coconut
-        float x, y; 
-        Coconut(float x, float y) { 
-            this.x = x; 
+        // Position of coconut
+        float x, y; // Position of coconut
+        int timesReachedEnd;
+
+        Coconut(float x, float y) {
+            this.x = x;
             this.y = y;
         }
 
-        // update coconut position make it appear on  screen
-        void updateCC() {
-            // draw coconut
+        // update coconut position make it appear on screen
+        void update() {
+            // Draw coconut
             float coconutSize = 100;
             float coconutLeftX = x - coconutSize / 2;
             stroke(360, 100, 36);
             fill(360, 100, 36);
             ellipse(coconutLeftX, y, coconutSize, coconutSize);
 
-            // makes coconut falls down
+            // Draw small circle on the right top corner of coconut
+            float smallCircleSize = 20;
+            float smallCircleOffsetX = coconutSize / 2 - 30;
+            float smallCircleOffsetY = -coconutSize / 2 + 30;
+            stroke(67, 37, 100);
+            fill(67, 37, 100);
+            ellipse(coconutLeftX + smallCircleOffsetX, y + smallCircleOffsetY, smallCircleSize, smallCircleSize);
+
+            // makes coconut falls dow
             y += ySpeed;
             if (y > height) {
-                y = 0; // coconut goes back up when ir reaches the bottom 
-
+                y = 0; // coconut goes back up when ir reaches the bottom
+                timesReachedEnd++;
             }
-
+            if (timesReachedEnd >= 2) {
+                coconuts.remove(this); // remove coconut from the list if reached the end twice
+            }
         }
 
     }
@@ -135,11 +147,12 @@ public class iriaVisual extends PApplet {
 
         reactToMouseMovement();
         for (int i = coconuts.size() - 1; i >= 0; i--) {
-            Coconut c = coconuts.get(i);//get the coconut from the list 
-            c.updateCC(); //draw the coconut 
+            Coconut c = coconuts.get(i); // get the coconut from the list
+            c.update(); // draw the coconut
         }
 
         for (int i = 0; i < ab.size(); i++) {
+
             float hue = map(i, 0, ab.size(), 0, 121);
             float s = lerpedBuffer[i] * cx;
             stroke(hue, 255, 300);
@@ -147,9 +160,9 @@ public class iriaVisual extends PApplet {
             // circle(512, 300, average * cy * 5);
             // line(cy * s, i * s, s, ab.get(i) + s * 100);
 
-            //cool line that moves with the music 
-            //cos and sin functions to make line move in a circular way 
-            //two_pi is a full circle 
+            // cool line that moves with the music
+            // cos and sin functions to make line move in a circular way
+            // two_pi is a full circle
             line(cx, cy + smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2,
                     cy + sin(TWO_PI / ab.size() * i) * s * 2);
 
@@ -158,7 +171,7 @@ public class iriaVisual extends PApplet {
             float hue = map(i, 0, ab.size(), 290, 51);
             float s = lerpedBuffer[i] * cx;
             stroke(hue, 100, 100);
-            //circle to be infront of the cool line 
+            // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
         }
 
@@ -166,7 +179,7 @@ public class iriaVisual extends PApplet {
             float hue = map(i, 0, ab.size(), 41, 70);
             float s = lerpedBuffer[i] * cx;
             stroke(hue, 100, 100);
-            //idk yet 
+            // idk yet
 
         }
 
