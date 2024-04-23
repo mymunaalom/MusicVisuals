@@ -8,6 +8,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import ie.tudublin.*;
 import processing.core.*;
+import java.util.ArrayList;
 
 public class iriaVisual extends PApplet {
 
@@ -16,13 +17,15 @@ public class iriaVisual extends PApplet {
     AudioInput ai;
     AudioBuffer ab;
 
-    int mode = 0;
+    int mode = 0; // default mode for switch statement
 
     float[] lerpedBuffer;
     float y = 0; // vertical position
     float ySpeed = 2;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
+
+    ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -35,6 +38,14 @@ public class iriaVisual extends PApplet {
                 ap.rewind();
                 ap.play();
             }
+        }
+        switch (mode) {
+            case 0:
+                draw();
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -56,13 +67,48 @@ public class iriaVisual extends PApplet {
         y = height / 2;
         smoothedY = y;
 
-        tikiface = loadImage("tiki_face2.png");
+        tikiface = loadImage("tiki_face.png");
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
     }
 
     float off = 0;
+
+    public void reactToMouseMovement() {
+        // make coconuts appear on screen when clicked by mouse
+        if (mousePressed) {
+            coconuts.add(new Coconut(mouseX, mouseY)); // create new coconuts + add to list
+        }
+    }
+
+    class Coconut {
+        // position coconut
+        float x, y; 
+        Coconut(float x, float y) { 
+            this.x = x; 
+            this.y = y;
+        }
+
+        // update coconut position make it appear on  screen
+        void updateCC() {
+            // draw coconut
+            float coconutSize = 100;
+            float coconutLeftX = x - coconutSize / 2;
+            stroke(360, 100, 36);
+            fill(360, 100, 36);
+            ellipse(coconutLeftX, y, coconutSize, coconutSize);
+
+            // makes coconut falls down
+            y += ySpeed;
+            if (y > height) {
+                y = 0; // coconut goes back up when ir reaches the bottom 
+
+            }
+
+        }
+
+    }
 
     public void draw() {
         float halfH = height / 2;
@@ -83,84 +129,45 @@ public class iriaVisual extends PApplet {
         float cy = height / 2;
 
         background(0);
-        switch (mode) {
-            case 1:
-                colorMode(HSB, 360, 100, 100); // mode HSB
-                background(209, 58, 100);
 
-                // position of the coconuts
-                float coconutSpacing = 80; // spacing between coconuts
-                float coconutSize = 100;
-                float coconutLeftX = coconutSize / 2 + 50; // left coconut
-                float coconutRightX1 = width - coconutSize / 2 - 150; // right coconut
-                float coconutRightX2 = width - coconutSize / 2; // right coconut
-                float coconutY = y;
+        colorMode(HSB, 360, 100, 100); // mode HSB
+        background(209, 58, 100);
 
-                // coconut on the left
-                // noStroke();
-                stroke(360, 100, 15);
-                fill(360, 100, 36);
-                ellipse(coconutLeftX, coconutY, coconutSize, coconutSize);
+        reactToMouseMovement();
+        for (int i = coconuts.size() - 1; i >= 0; i--) {
+            Coconut c = coconuts.get(i);//get the coconut from the list 
+            c.updateCC(); //draw the coconut 
+        }
 
-                // coconut on the right
-                ellipse(coconutRightX2, coconutY + coconutSpacing, coconutSize, coconutSize);
-                ellipse(coconutRightX1, coconutY - coconutSpacing, coconutSize, coconutSize);
+        for (int i = 0; i < ab.size(); i++) {
+            float hue = map(i, 0, ab.size(), 0, 121);
+            float s = lerpedBuffer[i] * cx;
+            stroke(hue, 255, 300);
+            // noFill();
+            // circle(512, 300, average * cy * 5);
+            // line(cy * s, i * s, s, ab.get(i) + s * 100);
 
-                // position of the small circle inside each coconut
-                float smallCircleSize = 20; // Size of the small circle
-                float smallCircleOffsetX = coconutSize / 4;
-                float smallCircleOffsetY = coconutSize / 4;
-                // draw small circles inside each coconut
-                stroke(67, 37, 56);
-                fill(67, 37, 100); // light reflection color
+            //cool line that moves with the music 
+            //cos and sin functions to make line move in a circular way 
+            //two_pi is a full circle 
+            line(cx, cy + smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2,
+                    cy + sin(TWO_PI / ab.size() * i) * s * 2);
 
-                ellipse(coconutLeftX + smallCircleOffsetX, coconutY - smallCircleOffsetY, smallCircleSize,
-                        smallCircleSize);
-                ellipse(coconutRightX2 + smallCircleOffsetX, coconutY + coconutSpacing - smallCircleOffsetY,
-                        smallCircleSize, smallCircleSize);
-                ellipse(coconutRightX1 + smallCircleOffsetX, coconutY - coconutSpacing - smallCircleOffsetY,
-                        smallCircleSize, smallCircleSize);
+        }
+        for (int i = 0; i < ab.size(); i++) {
+            float hue = map(i, 0, ab.size(), 290, 51);
+            float s = lerpedBuffer[i] * cx;
+            stroke(hue, 100, 100);
+            //circle to be infront of the cool line 
+            circle(cx, cy, average * i / 8);
+        }
 
-                // vertical position
-                y += ySpeed;
-                if (y > height) {
-                    y = 0; // reset the coconuts position when it reaches the bottom
-                }
+        for (int i = 0; i < ab.size(); i++) {
+            float hue = map(i, 0, ab.size(), 41, 70);
+            float s = lerpedBuffer[i] * cx;
+            stroke(hue, 100, 100);
+            //idk yet 
 
-                for (int i = 0; i < ab.size(); i++) {
-
-                    float hue = map(i, 0, ab.size(), 0, 121);
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 255, 300);
-                    // noFill();
-                    // circle(512, 300, average * cy * 5);
-                    // line(cy * s, i * s, s, ab.get(i) + s * 100);
-                    line(cx, cy+smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
-
-                }
-                for (int i = 0; i < ab.size(); i++) {
-                    float hue = map(i, 0, ab.size(), 290,51 );
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 100, 100);
-                    circle(cx, cy, average* i /8);
-                }
-
-                for (int i = 0; i < ab.size(); i++) {
-                    float hue = map(i, 0, ab.size(), 41,70 );
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 100, 100);
-                 
-                    float d = width * 0.2f; 
-
-                    
-
-                }
-              
-              
-
-                break;
-            default:
-                break;
         }
 
     }
