@@ -86,7 +86,7 @@ public class iriaVisual extends PApplet {
         switch (mode) {
             case 1:
                 colorMode(HSB, 360, 100, 100); // mode HSB
-                background(209,100,52);
+                background(209, 58, 100);
 
                 // position of the coconuts
                 float coconutSpacing = 80; // spacing between coconuts
@@ -127,59 +127,38 @@ public class iriaVisual extends PApplet {
                     y = 0; // reset the coconuts position when it reaches the bottom
                 }
 
-                
-                 
                 for (int i = 0; i < ab.size(); i++) {
 
                     float hue = map(i, 0, ab.size(), 0, 121);
                     float s = lerpedBuffer[i] * cx;
-                     stroke(hue, 255, 300);
+                    stroke(hue, 255, 300);
                     // noFill();
                     // circle(512, 300, average * cy * 5);
                     // line(cy * s, i * s, s, ab.get(i) + s * 100);
-                    line(512, 300, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
+                    line(cx, cy+smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
 
                 }
-
-                float arcRadius = width / ab.size()*8; // Adjust this value to control the radius
+                for (int i = 0; i < ab.size(); i++) {
+                    float hue = map(i, 0, ab.size(), 290,51 );
+                    float s = lerpedBuffer[i] * cx;
+                    stroke(hue, 100, 100);
+                    circle(cx, cy, average* i /8);
+                }
 
                 for (int i = 0; i < ab.size(); i++) {
-                float hue = map(i, 0, ab.size(), 0, 360);
-                float s = lerpedBuffer[i] * arcRadius; // Adjust scaling based on preference
-                float angleOffset = TWO_PI / 3.0f * i; // Calculate angle offset for each arc
+                    float hue = map(i, 0, ab.size(), 41,70 );
+                    float s = lerpedBuffer[i] * cx;
+                    stroke(hue, 100, 100);
+                 
+                    float d = width * 0.2f; 
 
-                // Calculate starting and ending angles for each arc (120 degrees each)
-                float startAngle = angleOffset;
-                float endAngle = startAngle + TWO_PI / 3.0f;
+                    
 
-                // Draw the arc
-                stroke(hue, 100, 100);
-                noFill();
-                arc(cx, cy, arcRadius, arcRadius, startAngle, endAngle);
                 }
-
-
-
+              
+              
 
                 break;
-            case 2: {
-               
-                
-                // for (int i = 0; i < ab.size(); i++) {
-
-                //     float hue = map(i, 0, ab.size(), 0, 256);
-                //     float s = lerpedBuffer[i] * cx;
-                //     stroke(hue, 255, 300);
-                //     noFill();
-                //     circle(512, 300, average * cy * 5);
-                //     // line(cy * s, i * s, s, ab.get(i) + s * 100);
-                //     line(512, 300, cx + cos(TWO_PI / ab.size() * i) * s * 2, cy + sin(TWO_PI / ab.size() * i) * s * 2);
-
-                // }
-                break;
-            }
-            
-            
             default:
                 break;
         }
