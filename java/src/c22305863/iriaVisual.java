@@ -72,7 +72,7 @@ public class iriaVisual extends PApplet {
         y = height / 2;
         smoothedY = y;
 
-       
+         
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
@@ -189,12 +189,20 @@ public class iriaVisual extends PApplet {
             c.update(); // draw the coconut
         }
 
-        for (int i = 0; i < ab.size(); i++) {
-            float hue = map(i, 0, ab.size(), 56, 0);
-            float s = lerpedBuffer[i] * cx;
-            stroke(hue, 100, 100);
-            noFill();
-            circle(cx, cy, average * i *2);
+        // for (int i = 0; i < ab.size(); i++) {
+        //     float hue = map(i, 0, ab.size(), 56, 0);
+        //     float s = lerpedBuffer[i] * cx;
+        //     stroke(hue, 100, 100);
+        //     noFill();
+        //     circle(cx, cy, average * i *2);
+        // }
+        float max_distance = dist(0, 0, width, height); // Declare and initialize max_distance variable
+        for(int i = 0; i <= width; i += 20) {
+            for(int j = 0; j <= height; j += 20) {
+                float size = dist(mouseX, mouseY, i, j);
+                size = size/max_distance * 66;
+                ellipse(i, j, size, size);
+            }
         }
 
         for (int i = 0; i < ab.size(); i++) {
@@ -205,8 +213,7 @@ public class iriaVisual extends PApplet {
             // cool line that moves with the music
             // cos and sin functions to make line move in a circular way
             // two_pi is a full circle
-            line(cx, cy + smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2,
-                    cy + sin(TWO_PI / ab.size() * i) * s * 2);
+            line(cx, cy + smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2,cy + sin(TWO_PI / ab.size() * i) * s * 2);
 
         }
         for (int i = 0; i < ab.size(); i++) {
