@@ -4,7 +4,12 @@ import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
+import processing.*;
 import processing.core.PApplet;
+import processing.core.PImage;
+import ie.tudublin.*;
+import processing.core.*;
+import java.util.ArrayList;
 
 public class IriaVisual2 extends PApplet {
 
@@ -13,12 +18,11 @@ public class IriaVisual2 extends PApplet {
     AudioInput ai;
     AudioBuffer ab;
 
-    int mode = 0;
+    int mode = 0; // default mode for switch statement
 
-    float[] lerpedBuffer;
-    float y = 0;
-    float smoothedY = 0;
-    float smoothedAmplitude = 0;
+    ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
+    PImage tikiface;
+    PVector tikiPos;
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -32,104 +36,102 @@ public class IriaVisual2 extends PApplet {
                 ap.play();
             }
         }
+        switch (mode) {
+            case 0:
+                draw();
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void settings() {
-        // size(1024, 1000, P3D);
-        // fullScreen(P3D, SPAN);
-        size(1024, 1000);
+        size(1024, 600, P3D);
     }
 
     public void setup() {
         minim = new Minim(this);
-        // Uncomment this to use the microphone
-        // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        // ab = ai.mix;
-        ap = minim.loadFile("song.mp3", 1024);
+        ap = minim.loadFile("Squidward's Tiki Land     Psy-Trance Remix.mp3", 1024);
         ap.play();
         ab = ap.mix;
         colorMode(HSB);
 
-        y = height / 2;
-        smoothedY = y;
-
-        lerpedBuffer = new float[width];
+        tikiface = loadImage("titki_face.png");
+        tikiPos = new PVector(width / 2, height / 12);
     }
 
-    float off = 0;
+    public void reactToMouseMovement() {
+        // make coconuts appear on screen when clicked by mouse
+        if (mousePressed) {
+            coconuts.add(new Coconut(new PVector(mouseX, mouseY)));// create new coconuts + add to list
+        }
+    }
+
+    public void tiki_face() {
+        int numTikis = 5;
+        float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
+
+        for (int i = 1; i <= numTikis; i++) {
+            float tikiX = i * tikiSpacing - 100; // Calculate X position
+
+            // move tiki with music
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, 50);
+            PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
+
+            // draw tiki face at the updated position
+            image(tikiface, tikiPos.x, tikiPos.y);
+        }
+    }
+
+    class Coconut {
+        // Position of coconut
+        PVector position;
+        int timesReachedEnd;
+
+        Coconut(PVector position) {
+            this.position = position;
+        }
+
+        // update coconut position make it appear on screen
+        void update() {
+            // Draw coconut
+            float coconutSize = 100;
+
+            pushMatrix(); // Save the current transformation matrix
+            translate(position.x, position.y); // Translate to the coconut's position
+            noStroke();
+            fill(360, 100, 36);
+            ellipse(0, 0, coconutSize, coconutSize); // Draw coconut at the translated position
+            popMatrix(); // Restore the previous transformation matrix
+
+            // makes coconut falls down
+            position.y += 2; // You can adjust the falling speed here
+            if (position.y > height) {
+                position.y = 0; // coconut goes back up when it reaches the bottom
+                timesReachedEnd++;
+            }
+            if (timesReachedEnd >= 2) {
+                coconuts.remove(this); // remove coconut from the list if reached the end twice
+            }
+        }
+    }
 
     public void draw() {
-        // background(0);
-        float halfH = height / 2;
-        float average = 0;
-        float sum = 0;
-        off += 1;
-        // Calculate sum and average of the samples
-        // Also lerp each element of buffer;
-        for (int i = 0; i < ab.size(); i++) {
-            sum += abs(ab.get(i));
-            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
-        }
-        average = sum / (float) ab.size();
+        background(0);
 
-        smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
-
-        float cx = width / 2;
-        float cy = height / 2;
-
-        switch (mode) {
-            case 0:
-                background(0);
-
-                break;
-            case 1: {
-                background(0);
-
-                break;
-            }
-            case 2: {
-                background(0);
-                break;
-            }
-
-            case 3: {
-                background(0);
-                // Code goes here
-
-                stroke(165, 180, 360);
-                noFill();
-                strokeWeight(2);
-                circle(cy * 1f, cy, average * cy * 5);
-                break;
-            }
-            case 4: {
-                background(0);
-                // Code goes here
-                stroke(165, 180, 360);
-                noFill();
-                rectMode(CENTER);
-                rect(cx, cy, average * width * 2, average * width * 2);
-                break;
-            }
-            case 5: {
-                background(0);
-                // Code goes here
-                for (int i = 0; i < ab.size(); i++) {
-
-                    float hue = map(i, 0, ab.size(), 0, 256);
-                    float s = lerpedBuffer[i] * cx;
-                    stroke(hue, 255, 300);
-                    noFill();
-                    line(cy * s, i * s, s, ab.get(i) + s * 100);
-                    line(cx, cy, cx + cos(TWO_PI / ab.size() * i) * s, cy + sin(TWO_PI / ab.size() * i) * s);
-
-                }
-
-                break;
-
-            }
-
+        reactToMouseMovement();
+        for (int i = coconuts.size() - 1; i >= 0; i--) {
+            Coconut c = coconuts.get(i); // get the coconut from the list
+            c.update(); // draw the coconut
         }
 
+        tiki_face();
+    }
+
+    public static void main(String[] args) {
+        PApplet.main("IriaVisual2");
     }
 }
