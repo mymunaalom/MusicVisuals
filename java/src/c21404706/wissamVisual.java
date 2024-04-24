@@ -82,8 +82,6 @@ public class wissamVisual extends PApplet {
             line(i, height, i, height - s);
         } 
 
-        
-
         int gridSize = 40;
 
         for (int x = gridSize; x <= width - gridSize; x += gridSize) {
@@ -111,22 +109,30 @@ public class wissamVisual extends PApplet {
             int index = (which+1 + i) % num;
             ellipse(mx[index], my[index], i, i);
         }
-        }
- 
-        float[] tentacleX = {200, 250, 300};
-        float[] tentacleY = {200, 250, 200};
 
-        for (int i = 0; i < tentacleX.length; i++) {
-            tentacleX[i] += off;
-            tentacleY[i] -= off;
-            float endX = tentacleX[i] + 50;
-            float endY = tentacleY[i] + 50;
+        int x;
+        int y;
+        float outsideRadius = 150;
+        float insideRadius = 100;
 
-            float hue = map(i, 0, tentacleX.length, 0, 256);
-            stroke(hue, 255, 255);
-            line(tentacleX[i], tentacleY[i], endX, endY);
+        int numPoints = (int) map((float) mouseX, 0, (float) width, 6, 60);
+        float angle = 0;
+        float angleStep = 180.0f/num;
+            
+        beginShape(TRIANGLE_STRIP); 
+        for (int i = 0; i <= numPoints; i++) {
+            float px = mouseX + cos(radians(angle)) * outsideRadius;
+            float py = mouseY + sin(radians(angle)) * outsideRadius;
+            angle += angleStep;
+            vertex(px, py);
+            px = mouseX + cos(radians(angle)) * insideRadius;
+            py = mouseY + sin(radians(angle)) * insideRadius;
+            vertex(px, py); 
+            angle += angleStep;
         }
-        
+        endShape();
+           
+    } 
 
 
     public void draw() {
