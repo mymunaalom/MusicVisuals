@@ -63,23 +63,7 @@ public class wissamVisual extends PApplet {
 
     float off = 0;
 
-    // Function to draw the Squidward meme animation
-    public void squidwardMeme() {
-        float[] tentacleX = {200, 250, 300};
-        float[] tentacleY = {200, 250, 200};
-
-        for (int i = 0; i < tentacleX.length; i++) {
-            tentacleX[i] += off;
-            tentacleY[i] -= off;
-            float endX = tentacleX[i] + 50;
-            float endY = tentacleY[i] + 50;
-
-            float hue = map(i, 0, tentacleX.length, 0, 256);
-            stroke(hue, 255, 255);
-            line(tentacleX[i], tentacleY[i], endX, endY);
-        }
-    } 
-    public void OutlineVis() {
+    public void visiual() {
 
         for (int i = 0; i < ab.size(); i++) {
             float cx = width / 2;
@@ -96,31 +80,54 @@ public class wissamVisual extends PApplet {
             line(i, 0, i, s);
             // from bottom to top
             line(i, height, i, height - s);
+        } 
+
+        
+
+        int gridSize = 40;
+
+        for (int x = gridSize; x <= width - gridSize; x += gridSize) {
+            for (int y = gridSize; y <= height - gridSize; y += gridSize) {
+                noStroke();
+                fill(255);
+                rect(x-1, y-1, 3, 3);
+                stroke(255, 100);
+                line(x, y, width/2, height/2);
+            }
+        }
+
+        int num = 60;
+        float mx[] = new float[num];
+        float my[] = new float[num];
+
+        // Cycle through the array, using a different entry on each frame. 
+        // Using modulo (%) like this is faster than moving all the values over.
+        int which = frameCount % num;
+        mx[which] = mouseX;
+        my[which] = mouseY;
+        
+        for (int i = 0; i < num; i++) {
+            // which+1 is the smallest (the oldest in the array)
+            int index = (which+1 + i) % num;
+            ellipse(mx[index], my[index], i, i);
+        }
+        }
+ 
+        float[] tentacleX = {200, 250, 300};
+        float[] tentacleY = {200, 250, 200};
+
+        for (int i = 0; i < tentacleX.length; i++) {
+            tentacleX[i] += off;
+            tentacleY[i] -= off;
+            float endX = tentacleX[i] + 50;
+            float endY = tentacleY[i] + 50;
+
+            float hue = map(i, 0, tentacleX.length, 0, 256);
+            stroke(hue, 255, 255);
+            line(tentacleX[i], tentacleY[i], endX, endY);
         }
         
-    }
 
-    // Function to draw two big tentacles moving up and down
-    public void bigTentacles() {
-        float x1 = width / 4;
-        float y1 = height / 2 - 50 * sin(radians(frameCount * 0.05f)); // Convert to radians
-        float x2 = 3 * width / 4;
-        float y2 = height / 2 - 50 * cos(radians(frameCount * 0.05f)); // Convert to radians
-
-        float z = 0;
-
-        float hue = (frameCount / 2) % 256;
-        stroke(200, 255, 255); // Light blue color
-        beginShape();
-        vertex(x1, height, z);
-        vertex(x1, y1, z);
-        endShape();
-        
-        beginShape();
-        vertex(x2, height, z);
-        vertex(x2, y2, z);
-        endShape();
-    }
 
     public void draw() {
         background(180);
@@ -141,6 +148,9 @@ public class wissamVisual extends PApplet {
         float cx = width / 2;
         float cy = height / 2;
 
+
+        //calling outline for visiual
+        visiual();
     }
 
 }
