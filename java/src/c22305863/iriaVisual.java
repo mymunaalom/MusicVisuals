@@ -11,7 +11,6 @@ import ie.tudublin.*;
 import processing.core.*;
 import java.util.ArrayList;
 
-
 public class iriaVisual extends PApplet {
 
     Minim minim;
@@ -26,6 +25,8 @@ public class iriaVisual extends PApplet {
     float ySpeed = 2;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
+    float outsideRadius = 150;
+    float insideRadius = 100;
 
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
     PImage tikiface;
@@ -72,7 +73,6 @@ public class iriaVisual extends PApplet {
         y = height / 2;
         smoothedY = y;
 
-         
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
@@ -95,14 +95,13 @@ public class iriaVisual extends PApplet {
         int numTikis = 5;
         float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
-
         for (int i = 1; i <= numTikis; i++) {
             float tikiX = i * tikiSpacing - 100; // Calculate X position
 
             // move tiki with music
-            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size()/8);
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
             PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
-            PVector tikiPos2 = new PVector(tikiX, height/1.5f + amplitude);
+            PVector tikiPos2 = new PVector(tikiX, height / 1.5f + amplitude);
 
             float hue = map(amplitude, 0, 50, 0, 360);
             fill(hue, 100, 100);
@@ -111,14 +110,10 @@ public class iriaVisual extends PApplet {
             image(tikiface, tikiPos.x, tikiPos.y);
             image(tikiface, tikiPos2.x, tikiPos2.y);
 
-
         }
 
     }
-   
-        
-    
-    
+
     class Coconut {
         // position of coconut
         PVector position;
@@ -188,23 +183,14 @@ public class iriaVisual extends PApplet {
             Coconut c = coconuts.get(i); // get the coconut from the list
             c.update(); // draw the coconut
         }
-
-        // for (int i = 0; i < ab.size(); i++) {
-        //     float hue = map(i, 0, ab.size(), 56, 0);
-        //     float s = lerpedBuffer[i] * cx;
-        //     stroke(hue, 100, 100);
-        //     noFill();
-        //     circle(cx, cy, average * i *2);
-        // }
-        float max_distance = dist(0, 0, width, height); // Declare and initialize max_distance variable
-        for(int i = 0; i <= width; i += 20) {
-            for(int j = 0; j <= height; j += 20) {
-                float size = dist(mouseX, mouseY, i, j);
-                size = size/max_distance * 66;
-                ellipse(i, j, size, size);
-            }
+        
+        for (int i = 0; i < ab.size(); i++) {
+            float hue = map(i, 0, ab.size(), 56, 0);
+            float s = lerpedBuffer[i] * cx;
+            stroke(hue, 100, 100);
+            noFill();
+            circle(cx, cy, average * i *2);
         }
-
         for (int i = 0; i < ab.size(); i++) {
 
             float hue = map(i, 0, ab.size(), 0, 121);
@@ -213,7 +199,8 @@ public class iriaVisual extends PApplet {
             // cool line that moves with the music
             // cos and sin functions to make line move in a circular way
             // two_pi is a full circle
-            line(cx, cy + smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2,cy + sin(TWO_PI / ab.size() * i) * s * 2);
+            line(cx, cy + smoothedAmplitude, cx + cos(TWO_PI / ab.size() * i) * s * 2,
+                    cy + sin(TWO_PI / ab.size() * i) * s * 2);
 
         }
         for (int i = 0; i < ab.size(); i++) {
@@ -224,10 +211,7 @@ public class iriaVisual extends PApplet {
             circle(cx, cy, average * i / 8);
         }
 
-       
-
         tiki_face();
-        
 
     }
 }
