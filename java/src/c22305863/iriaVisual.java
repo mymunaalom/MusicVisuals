@@ -29,7 +29,7 @@ public class iriaVisual extends PApplet {
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
     PImage tikiface;
     PVector tikiPos;
-    
+
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
             mode = key - '0';
@@ -74,6 +74,11 @@ public class iriaVisual extends PApplet {
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
+
+        tikiface = loadImage("titki_face.png");
+        textureMode(NORMAL);
+        lerpedBuffer = new float[width];
+        tikiPos = new PVector(width / 2, height / 2);
     }
 
     float off = 0;
@@ -86,17 +91,12 @@ public class iriaVisual extends PApplet {
     }
 
     public void tiki_face() {
-        float cx = width / 2;
-        float cy = height / 2;
-        PImage tikiface;
-        tikiface = loadImage("tiki_face.png");
+        // move  tiki  with  music 
+        float amplitude = smoothedAmplitude * 900; 
+        tikiPos.y = height / 2 + amplitude;
 
-        PVector tikipos = new PVector(cx, cy);
-
-        float amp = smoothedAmplitude * 100;
-        tikipos.y = cy + amp;// move tiki up and down with music
-
-        image(tikiface, tikipos.x, tikipos.y);
+        // draw  tiki face  at the updated position
+        image(tikiface, tikiPos.x, tikiPos.y);
     }
 
     class Coconut {
@@ -193,11 +193,11 @@ public class iriaVisual extends PApplet {
         }
         tiki_face();
         // for (int i = 0; i < ab.size(); i++) {
-        //     float hue = map(i, 0, ab.size(), 41, 70);
-        //     float s = lerpedBuffer[i] * cx;
-        //     stroke(hue, 100, 100);
-        //     // idk yet
-        //     //line(cy * s, i * s, s, ab.get(i) + s * 100);
+        // float hue = map(i, 0, ab.size(), 41, 70);
+        // float s = lerpedBuffer[i] * cx;
+        // stroke(hue, 100, 100);
+        // // idk yet
+        // //line(cy * s, i * s, s, ab.get(i) + s * 100);
 
         // }
 
