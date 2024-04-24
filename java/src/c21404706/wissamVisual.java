@@ -5,7 +5,12 @@ import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
+import processing.*;
 import processing.core.PApplet;
+import processing.core.PImage;
+import ie.tudublin.*;
+import processing.core.*;
+import java.util.ArrayList;
 
 public class wissamVisual extends PApplet {
     Minim minim;
@@ -95,6 +100,28 @@ public class wissamVisual extends PApplet {
         
     }
 
+    // Function to draw two big tentacles moving up and down
+    public void bigTentacles() {
+        float x1 = width / 4;
+        float y1 = height / 2 - 50 * sin(radians(frameCount * 0.05f)); // Convert to radians
+        float x2 = 3 * width / 4;
+        float y2 = height / 2 - 50 * cos(radians(frameCount * 0.05f)); // Convert to radians
+
+        float z = 0;
+
+        float hue = (frameCount / 2) % 256;
+        stroke(200, 255, 255); // Light blue color
+        beginShape();
+        vertex(x1, height, z);
+        vertex(x1, y1, z);
+        endShape();
+        
+        beginShape();
+        vertex(x2, height, z);
+        vertex(x2, y2, z);
+        endShape();
+    }
+
     public void draw() {
         background(180);
         float halfH = height / 2;
@@ -113,12 +140,6 @@ public class wissamVisual extends PApplet {
 
         float cx = width / 2;
         float cy = height / 2;
-
-        //calling squidward meme function
-        squidwardMeme();
-         
-        //calling outline visiual 
-        OutlineVis();
 
     }
 
