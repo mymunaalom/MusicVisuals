@@ -11,6 +11,7 @@ import ie.tudublin.*;
 import processing.core.*;
 import java.util.ArrayList;
 
+
 public class iriaVisual extends PApplet {
 
     Minim minim;
@@ -94,47 +95,29 @@ public class iriaVisual extends PApplet {
         int numTikis = 5;
         float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
+
         for (int i = 1; i <= numTikis; i++) {
             float tikiX = i * tikiSpacing - 100; // Calculate X position
 
             // move tiki with music
-            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, 50);
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size()/8);
             PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
+            PVector tikiPos2 = new PVector(tikiX, height/1.5f + amplitude);
+
             float hue = map(amplitude, 0, 50, 0, 360);
             fill(hue, 100, 100);
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
+            image(tikiface, tikiPos2.x, tikiPos2.y);
+
 
         }
 
     }
-    public void fire()  {
-        int numTikis = 5;
-        float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
-
-        for (int t = 0; t < numTikis; t++) {
-            PVector tikiPos = new PVector(tikiSpacing * (t + 1) - 100, height / 12); // Calculate tiki position
+   
+        
     
-            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, 50);
-    
-            for (int i = 0; i < 100; i++) {
-                float hue = map(i, 0, ab.size(), 0, 130);
-                // draw fire around the tiki
-                int skirtSegments = 20; // Number of segments in the skirt
-                float skirtRadius = 100; // Radius of the skirt
-                stroke(hue,100,100);
-                for (int j = 0; j < skirtSegments; j++) {
-                    float angle = map(j, 0, skirtSegments, 0, TWO_PI);
-                    float startX = tikiPos.x + cos(angle) * skirtRadius;
-                    float startY = tikiPos.y + sin(angle) * skirtRadius;
-                    float endX = tikiPos.x + cos(angle) * (skirtRadius + amplitude * 0.5f);
-                    float endY = tikiPos.y + sin(angle) * (skirtRadius + amplitude * 0.5f);
-                    line(startX, startY, endX, endY);
-                }
-            }
-        }
-    }
     
     class Coconut {
         // position of coconut
@@ -207,6 +190,14 @@ public class iriaVisual extends PApplet {
         }
 
         for (int i = 0; i < ab.size(); i++) {
+            float hue = map(i, 0, ab.size(), 56, 0);
+            float s = lerpedBuffer[i] * cx;
+            stroke(hue, 100, 100);
+            noFill();
+            circle(cx, cy, average * i *2);
+        }
+
+        for (int i = 0; i < ab.size(); i++) {
 
             float hue = map(i, 0, ab.size(), 0, 121);
             float s = lerpedBuffer[i] * cx;
@@ -226,8 +217,10 @@ public class iriaVisual extends PApplet {
             circle(cx, cy, average * i / 8);
         }
 
+       
+
         tiki_face();
-        fire();
+        
 
     }
 }
