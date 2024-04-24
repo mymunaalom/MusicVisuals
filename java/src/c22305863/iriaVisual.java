@@ -119,28 +119,27 @@ public class iriaVisual extends PApplet {
 
         // update coconut position make it appear on screen
         void update() {
-
-            // // Draw small circle on the right top corner of coconut
-            // float smallCircleSize = 20;
-            // float smallCircleOffsetX = coconutSize / 2 - 30;
-            // float smallCircleOffsetY = -coconutSize / 2 + 30;
-            // // stroke(67, 37, 100);
-            // noStroke();
-            // fill(67, 37, 100);
-            // ellipse(coconutLeftX + smallCircleOffsetX, y + smallCircleOffsetY, smallCircleSize, smallCircleSize);
-            
             // Draw coconut
             float coconutSize = 100;
 
-            pushMatrix(); // Save the current transformation matrix
-            translate(position.x, position.y); // Translate to the coconut's position
+            pushMatrix(); // save the current transformation matrix
+            translate(position.x, position.y); // translate to the coconut's position
             noStroke();
             fill(360, 100, 36);
-            ellipse(0, 0, coconutSize, coconutSize); // Draw coconut at the translated position
-            popMatrix(); // Restore the previous transformation matrix
+            ellipse(0, 0, coconutSize, coconutSize); // draw coconut at the translated position
+            
+            // Draw small circle inside the coconut
+            float smallCircleSize = 20;
+            float smallCircleOffsetX = coconutSize / 2 - 30;
+            float smallCircleOffsetY = -coconutSize / 2 + 30;
+            fill(67, 37, 100);
+            ellipse(smallCircleOffsetX, smallCircleOffsetY, smallCircleSize, smallCircleSize);
+
+            
+            popMatrix(); // restore the previous transformation matrix
 
             // makes coconut falls down
-            position.y += 2; // You can adjust the falling speed here
+            position.y += 2; 
             if (position.y > height) {
                 position.y = 0; // coconut goes back up when it reaches the bottom
                 timesReachedEnd++;
