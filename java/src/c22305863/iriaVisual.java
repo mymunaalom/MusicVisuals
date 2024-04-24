@@ -4,6 +4,7 @@ import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
+import processing.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 import ie.tudublin.*;
@@ -26,7 +27,9 @@ public class iriaVisual extends PApplet {
     float smoothedAmplitude = 0;
 
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
-
+    PImage tikiface;
+    PVector tikiPos;
+    
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
             mode = key - '0';
@@ -55,10 +58,11 @@ public class iriaVisual extends PApplet {
         // size(1024,700);
     }
 
-    PImage tikiface;
-
     public void setup() {
         minim = new Minim(this);
+        // Uncomment this to use the microphone
+        // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
+        // am = ai.mix;
         ap = minim.loadFile("Squidward's Tiki Land     Psy-Trance Remix.mp3", 1024);
         ap.play();
         ab = ap.mix;
@@ -67,7 +71,6 @@ public class iriaVisual extends PApplet {
         y = height / 2;
         smoothedY = y;
 
-        tikiface = loadImage("tiki_face2.png");
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
@@ -80,6 +83,20 @@ public class iriaVisual extends PApplet {
         if (mousePressed) {
             coconuts.add(new Coconut(mouseX, mouseY));// create new coconuts + add to list
         }
+    }
+
+    public void tiki_face() {
+        float cx = width / 2;
+        float cy = height / 2;
+        PImage tikiface;
+        tikiface = loadImage("tiki_face.png");
+
+        PVector tikipos = new PVector(cx, cy);
+
+        float amp = smoothedAmplitude * 100;
+        tikipos.y = cy + amp;// move tiki up and down with music
+
+        image(tikiface, tikipos.x, tikipos.y);
     }
 
     class Coconut {
@@ -112,7 +129,7 @@ public class iriaVisual extends PApplet {
             // makes coconut falls dow
             y += ySpeed;
             if (y > height) {
-                y = 0; // coconut goes back up when ir reaches the bottom
+                y = 2; // coconut goes back up when ir reaches the bottom
                 timesReachedEnd++;
             }
             if (timesReachedEnd >= 2) {
@@ -174,14 +191,15 @@ public class iriaVisual extends PApplet {
             // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
         }
+        tiki_face();
+        // for (int i = 0; i < ab.size(); i++) {
+        //     float hue = map(i, 0, ab.size(), 41, 70);
+        //     float s = lerpedBuffer[i] * cx;
+        //     stroke(hue, 100, 100);
+        //     // idk yet
+        //     //line(cy * s, i * s, s, ab.get(i) + s * 100);
 
-        for (int i = 0; i < ab.size(); i++) {
-            float hue = map(i, 0, ab.size(), 41, 70);
-            float s = lerpedBuffer[i] * cx;
-            stroke(hue, 100, 100);
-            // idk yet
-
-        }
+        // }
 
     }
 }
