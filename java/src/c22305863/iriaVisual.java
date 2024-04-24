@@ -76,8 +76,7 @@ public class iriaVisual extends PApplet {
         lerpedBuffer = new float[width];
 
         tikiface = loadImage("titki_face.png");
-        textureMode(NORMAL);
-        lerpedBuffer = new float[width];
+        tikiPos = new PVector(width / 2, height / 12);
 
     }
 
@@ -86,75 +85,70 @@ public class iriaVisual extends PApplet {
     public void reactToMouseMovement() {
         // make coconuts appear on screen when clicked by mouse
         if (mousePressed) {
-            coconuts.add(new Coconut(mouseX, mouseY));// create new coconuts + add to list
+            coconuts.add(new Coconut(new PVector(mouseX, mouseY)));// create new coconuts + add to list
         }
     }
 
     public void tiki_face() {
+        int numTikis = 5;
+        float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
-        // tikiPos = new PVector(width / 2, height / 2);
-        // // move tiki with music
-        // float amplitude = smoothedAmplitude * 900;
-        // tikiPos.y = height / 2 + amplitude;
-
-        // // draw tiki face at the updated position
-        // image(tikiface, tikiPos.x, tikiPos.y);
-
-        // Define the number of tiki faces you want
-        int numTikis = 4;
-
-        for (int i = 0; i < numTikis; i++) {
-            float tikiX = random(width); // Random X position
-            float tikiY = random(height); // Random Y position
+        for (int i = 1; i <= numTikis; i++) {
+            float tikiX = i * tikiSpacing - 100; // Calculate X position
 
             // move tiki with music
-            float amplitude = smoothedAmplitude * 90;
-            tikiY += amplitude;
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, 50);
+            PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
 
             // draw tiki face at the updated position
-            image(tikiface, tikiX, tikiY);
+            image(tikiface, tikiPos.x, tikiPos.y);
         }
 
     }
 
     class Coconut {
-        // Position of coconut
-        float x, y; // Position of coconut
+        // position of coconut
+        PVector position;
         int timesReachedEnd;
 
-        Coconut(float x, float y) {
-            this.x = x;
-            this.y = y;
+        Coconut(PVector position) {
+            this.position = position;
         }
 
         // update coconut position make it appear on screen
         void update() {
+
+            // // Draw small circle on the right top corner of coconut
+            // float smallCircleSize = 20;
+            // float smallCircleOffsetX = coconutSize / 2 - 30;
+            // float smallCircleOffsetY = -coconutSize / 2 + 30;
+            // // stroke(67, 37, 100);
+            // noStroke();
+            // fill(67, 37, 100);
+            // ellipse(coconutLeftX + smallCircleOffsetX, y + smallCircleOffsetY, smallCircleSize, smallCircleSize);
+            
             // Draw coconut
             float coconutSize = 100;
-            float coconutLeftX = x - coconutSize / 2;
-            // stroke(360, 100, 36);
+
+            pushMatrix(); // Save the current transformation matrix
+            translate(position.x, position.y); // Translate to the coconut's position
             noStroke();
             fill(360, 100, 36);
-            ellipse(coconutLeftX, y, coconutSize, coconutSize);
+            ellipse(0, 0, coconutSize, coconutSize); // Draw coconut at the translated position
+            popMatrix(); // Restore the previous transformation matrix
 
-            // Draw small circle on the right top corner of coconut
-            float smallCircleSize = 20;
-            float smallCircleOffsetX = coconutSize / 2 - 30;
-            float smallCircleOffsetY = -coconutSize / 2 + 30;
-            // stroke(67, 37, 100);
-            noStroke();
-            fill(67, 37, 100);
-            ellipse(coconutLeftX + smallCircleOffsetX, y + smallCircleOffsetY, smallCircleSize, smallCircleSize);
-
-            // makes coconut falls dow
-            y += ySpeed;
-            if (y > height) {
-                y = 2; // coconut goes back up when ir reaches the bottom
+            // makes coconut falls down
+            position.y += 2; // You can adjust the falling speed here
+            if (position.y > height) {
+                position.y = 0; // coconut goes back up when it reaches the bottom
                 timesReachedEnd++;
             }
             if (timesReachedEnd >= 2) {
                 coconuts.remove(this); // remove coconut from the list if reached the end twice
             }
+
         }
 
     }
@@ -182,12 +176,14 @@ public class iriaVisual extends PApplet {
         colorMode(HSB, 360, 100, 100); // mode HSB
         background(209, 58, 100);
 
+        
         reactToMouseMovement();
         for (int i = coconuts.size() - 1; i >= 0; i--) {
             Coconut c = coconuts.get(i); // get the coconut from the list
             c.update(); // draw the coconut
         }
 
+       
         for (int i = 0; i < ab.size(); i++) {
 
             float hue = map(i, 0, ab.size(), 0, 121);
@@ -213,6 +209,7 @@ public class iriaVisual extends PApplet {
         }
 
         tiki_face();
+
         // for (int i = 0; i < ab.size(); i++) {
         // float hue = map(i, 0, ab.size(), 41, 70);
         // float s = lerpedBuffer[i] * cx;
