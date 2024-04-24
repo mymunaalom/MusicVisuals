@@ -78,7 +78,7 @@ public class iriaVisual extends PApplet {
         tikiface = loadImage("titki_face.png");
         textureMode(NORMAL);
         lerpedBuffer = new float[width];
-       
+
     }
 
     float off = 0;
@@ -92,13 +92,29 @@ public class iriaVisual extends PApplet {
 
     public void tiki_face() {
 
-        tikiPos = new PVector(width / 2, height / 2);
-        // move  tiki  with  music 
-        float amplitude = smoothedAmplitude * 900; 
-        tikiPos.y = height / 2 + amplitude;
+        // tikiPos = new PVector(width / 2, height / 2);
+        // // move tiki with music
+        // float amplitude = smoothedAmplitude * 900;
+        // tikiPos.y = height / 2 + amplitude;
 
-        // draw  tiki face  at the updated position
-        image(tikiface, tikiPos.x, tikiPos.y);
+        // // draw tiki face at the updated position
+        // image(tikiface, tikiPos.x, tikiPos.y);
+
+        // Define the number of tiki faces you want
+        int numTikis = 4;
+
+        for (int i = 0; i < numTikis; i++) {
+            float tikiX = random(width); // Random X position
+            float tikiY = random(height); // Random Y position
+
+            // move tiki with music
+            float amplitude = smoothedAmplitude * 90;
+            tikiY += amplitude;
+
+            // draw tiki face at the updated position
+            image(tikiface, tikiX, tikiY);
+        }
+
     }
 
     class Coconut {
@@ -116,7 +132,7 @@ public class iriaVisual extends PApplet {
             // Draw coconut
             float coconutSize = 100;
             float coconutLeftX = x - coconutSize / 2;
-            //stroke(360, 100, 36);
+            // stroke(360, 100, 36);
             noStroke();
             fill(360, 100, 36);
             ellipse(coconutLeftX, y, coconutSize, coconutSize);
@@ -125,7 +141,7 @@ public class iriaVisual extends PApplet {
             float smallCircleSize = 20;
             float smallCircleOffsetX = coconutSize / 2 - 30;
             float smallCircleOffsetY = -coconutSize / 2 + 30;
-            //stroke(67, 37, 100);
+            // stroke(67, 37, 100);
             noStroke();
             fill(67, 37, 100);
             ellipse(coconutLeftX + smallCircleOffsetX, y + smallCircleOffsetY, smallCircleSize, smallCircleSize);
