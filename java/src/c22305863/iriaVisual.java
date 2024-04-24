@@ -71,6 +71,7 @@ public class iriaVisual extends PApplet {
         y = height / 2;
         smoothedY = y;
 
+       
         textureMode(NORMAL);
 
         lerpedBuffer = new float[width];
@@ -104,10 +105,37 @@ public class iriaVisual extends PApplet {
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
+
         }
 
     }
+    public void fire()  {
+        int numTikis = 5;
+        float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
+        for (int t = 0; t < numTikis; t++) {
+            PVector tikiPos = new PVector(tikiSpacing * (t + 1) - 100, height / 12); // Calculate tiki position
+    
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, 50);
+    
+            for (int i = 0; i < 100; i++) {
+                float hue = map(i, 0, ab.size(), 0, 130);
+                // draw fire around the tiki
+                int skirtSegments = 20; // Number of segments in the skirt
+                float skirtRadius = 100; // Radius of the skirt
+                stroke(hue,100,100);
+                for (int j = 0; j < skirtSegments; j++) {
+                    float angle = map(j, 0, skirtSegments, 0, TWO_PI);
+                    float startX = tikiPos.x + cos(angle) * skirtRadius;
+                    float startY = tikiPos.y + sin(angle) * skirtRadius;
+                    float endX = tikiPos.x + cos(angle) * (skirtRadius + amplitude * 0.5f);
+                    float endY = tikiPos.y + sin(angle) * (skirtRadius + amplitude * 0.5f);
+                    line(startX, startY, endX, endY);
+                }
+            }
+        }
+    }
+    
     class Coconut {
         // position of coconut
         PVector position;
@@ -127,7 +155,7 @@ public class iriaVisual extends PApplet {
             noStroke();
             fill(360, 100, 36);
             ellipse(0, 0, coconutSize, coconutSize); // draw coconut at the translated position
-            
+
             // Draw small circle inside the coconut
             float smallCircleSize = 20;
             float smallCircleOffsetX = coconutSize / 2 - 30;
@@ -135,11 +163,10 @@ public class iriaVisual extends PApplet {
             fill(67, 37, 100);
             ellipse(smallCircleOffsetX, smallCircleOffsetY, smallCircleSize, smallCircleSize);
 
-            
             popMatrix(); // restore the previous transformation matrix
 
             // makes coconut falls down
-            position.y += 2; 
+            position.y += 2;
             if (position.y > height) {
                 position.y = 0; // coconut goes back up when it reaches the bottom
                 timesReachedEnd++;
@@ -170,28 +197,20 @@ public class iriaVisual extends PApplet {
         float cx = width / 2;
         float cy = height / 2;
 
-        background(0);
-
         colorMode(HSB, 360, 100, 100); // mode HSB
         background(209, 58, 100);
 
-        
         reactToMouseMovement();
         for (int i = coconuts.size() - 1; i >= 0; i--) {
             Coconut c = coconuts.get(i); // get the coconut from the list
             c.update(); // draw the coconut
         }
 
-       
         for (int i = 0; i < ab.size(); i++) {
 
             float hue = map(i, 0, ab.size(), 0, 121);
             float s = lerpedBuffer[i] * cx;
             stroke(hue, 255, 300);
-            // noFill();
-            // circle(512, 300, average * cy * 5);
-            // line(cy * s, i * s, s, ab.get(i) + s * 100);
-
             // cool line that moves with the music
             // cos and sin functions to make line move in a circular way
             // two_pi is a full circle
@@ -208,15 +227,7 @@ public class iriaVisual extends PApplet {
         }
 
         tiki_face();
-
-        // for (int i = 0; i < ab.size(); i++) {
-        // float hue = map(i, 0, ab.size(), 41, 70);
-        // float s = lerpedBuffer[i] * cx;
-        // stroke(hue, 100, 100);
-        // // idk yet
-        // //line(cy * s, i * s, s, ab.get(i) + s * 100);
-
-        // }
+        fire();
 
     }
 }
