@@ -78,7 +78,7 @@ public class iriaVisual extends PApplet {
         tikiface = loadImage("titki_face.png");
         textureMode(NORMAL);
         lerpedBuffer = new float[width];
-        tikiPos = new PVector(width / 2, height / 2);
+       
     }
 
     float off = 0;
@@ -91,6 +91,8 @@ public class iriaVisual extends PApplet {
     }
 
     public void tiki_face() {
+
+        tikiPos = new PVector(width / 2, height / 2);
         // move  tiki  with  music 
         float amplitude = smoothedAmplitude * 900; 
         tikiPos.y = height / 2 + amplitude;
@@ -114,7 +116,8 @@ public class iriaVisual extends PApplet {
             // Draw coconut
             float coconutSize = 100;
             float coconutLeftX = x - coconutSize / 2;
-            stroke(360, 100, 36);
+            //stroke(360, 100, 36);
+            noStroke();
             fill(360, 100, 36);
             ellipse(coconutLeftX, y, coconutSize, coconutSize);
 
@@ -122,7 +125,8 @@ public class iriaVisual extends PApplet {
             float smallCircleSize = 20;
             float smallCircleOffsetX = coconutSize / 2 - 30;
             float smallCircleOffsetY = -coconutSize / 2 + 30;
-            stroke(67, 37, 100);
+            //stroke(67, 37, 100);
+            noStroke();
             fill(67, 37, 100);
             ellipse(coconutLeftX + smallCircleOffsetX, y + smallCircleOffsetY, smallCircleSize, smallCircleSize);
 
@@ -191,6 +195,7 @@ public class iriaVisual extends PApplet {
             // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
         }
+
         tiki_face();
         // for (int i = 0; i < ab.size(); i++) {
         // float hue = map(i, 0, ab.size(), 41, 70);
