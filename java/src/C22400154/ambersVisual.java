@@ -95,10 +95,27 @@ public class ambersVisual extends PApplet
         average = sum / (float) ab.size();
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
     
+        float averageAmplitude = getAverageAmplitude(ab);
+
+        float treeX1 = width / 4;
+        float treeX2 = width * 3 / 4;
+  
+        float treeY1 = map(averageAmplitude, 0, 1, height * 0.7f, height * 0.9f);
+        float treeY2 = map(averageAmplitude, 0, 1, height * 0.7f, height * 0.9f);
+
         background(152, 193, 217);
     
-        drawTree(width/4, height*3/4, 1.5f); //bottom left
-        drawTree(width*3/4, height*3/4, 1.5f); //bottom rightt
+        //draw leafs at updated positions
+        drawTree(treeX1, treeY1, 1.5f);
+        drawTree(treeX2, treeY2, 1.5f);
+    }
+
+    float getAverageAmplitude(AudioBuffer buffer) {
+        float sum = 0;
+        for (int i = 0; i < buffer.size(); i++) {
+          sum += abs(buffer.get(i));
+        }
+        return sum / buffer.size();
     }
 
     void drawTree(float x, float y, float scale) 
@@ -106,11 +123,11 @@ public class ambersVisual extends PApplet
         //trunk
         fill(55, 40, 28);
         rect(x - 10 * scale, y, 20 * scale, 150 * scale);
-  
+    
         //leaves 
         fill(19, 128, 99);
         
-        //top-left
+        //topleft
         beginShape();
         vertex(x + 10 * scale, y);
         bezierVertex(x - 50 * scale, y - 60 * scale, x - 70 * scale, y + 20 * scale, x - 50 * scale, y + 60 * scale);
@@ -131,13 +148,12 @@ public class ambersVisual extends PApplet
         bezierVertex(x + 30 * scale, y + 20 * scale, x + 40 * scale, y - 10 * scale, x + 10 * scale, y);
         endShape(CLOSE);
 
-        //top-right
+        //topright
         beginShape();
         vertex(x + 10 * scale, y);
         bezierVertex(x + 50 * scale, y - 60 * scale, x + 80 * scale, y - 20 * scale, x + 50 * scale, y + 20 * scale);
         bezierVertex(x + 20 * scale, y - 20 * scale, x + 30 * scale, y - 40 * scale, x + 10 * scale, y);
         endShape(CLOSE);
     }
-      
-} 
 
+} 
