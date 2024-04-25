@@ -98,23 +98,25 @@ public class iriaVisual extends PApplet {
         float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
         for (int i = 1; i <= numTikis; i++) {
+            
             float tikiX = i * tikiSpacing - 100; // Calculate X position
 
             // move tiki with music
             float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
             PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
-            PVector tikiPos2 = new PVector(tikiX, height / 1.5f + amplitude);
+            PVector tikiPos2 = new PVector(tikiX, height / 1.50f + amplitude);
 
             //skirt 
-            PVector skirtPos = new PVector(tikiX-30, height / 3.5f + amplitude);
-            PVector skirtPos2 = new PVector(tikiX, height / 0.5f + amplitude);
+            PVector skirtPos = new PVector(tikiX-30, height / 3.4f + amplitude);
+            PVector skirtPos2 = new PVector(tikiX-30, height / 1.14f + amplitude);
 
-            float hue = map(amplitude, 0, 50, 0, 360);
-            fill(hue, 100, 100);
+            
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
             image(tikiface, tikiPos2.x, tikiPos2.y);
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
             image(skirt, skirtPos.x, skirtPos.y);
             image(skirt, skirtPos2.x, skirtPos2.y);
 
