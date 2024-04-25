@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ambersVisual",
+            "request": "launch",
+            "mainClass": "C22400154.ambersVisual",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
             "name": "IriaVisual2",
             "request": "launch",
             "mainClass": "c22305863.IriaVisual2",

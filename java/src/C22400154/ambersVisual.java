@@ -7,6 +7,9 @@ import ddf.minim.Minim;
 import processing.core.PApplet;
 import java.util.ArrayList;
 
+
+
+
 public class ambersVisual extends PApplet 
 {
     Minim minim;
@@ -25,6 +28,8 @@ public class ambersVisual extends PApplet
     float insideRadius = 100;
 
     ArrayList<Cloud> clouds;
+    ArrayList<Flower> flowers;
+    boolean flowersStarted = false;
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -78,7 +83,8 @@ public class ambersVisual extends PApplet
             clouds.add(new Cloud(random(width), random(height * 0.2f), random(50, 100), random(1, 3)));
 
         }
-        
+
+        flowers = new ArrayList<Flower>();
 
     }
 
@@ -116,6 +122,20 @@ public class ambersVisual extends PApplet
 
         drawTree(treeX1, treeY1, 1.5f);
         drawTree(treeX2, treeY2, 1.5f);
+
+        if (ap.isPlaying() && ap.position() >= 19000 && !flowersStarted) 
+        {
+            flowersStarted = true;
+            startFlowers();
+        }
+
+        for (Flower flower : flowers) 
+        {
+            flower.update();  
+            flower.display(this); 
+        }
+
+
 
     }
 
@@ -201,9 +221,62 @@ public class ambersVisual extends PApplet
         }
     }
 
+    public class Flower 
+    {
+        float x, y;
+        float vx, vy;
+        float size;
+        int color;
+    
+        public Flower(float x, float y, float vx, float vy, float size, int color) 
+        {
+            this.x = x;
+            this.y = y;
+            this.vx = vx * 2;
+            this.vy = vy * 2;
+            this.size = size;
+            this.color = color;
+        }
+    
+        public void update() 
+        {
+            x += vx;
+            y += vy;
+        }
+    
+        public void display(PApplet p) 
+        {
+            p.noStroke();
+            p.fill(color);
+            float petalAngleIncrement = TWO_PI / 5; // Divide the circle into 5 equal parts for the petals
+
+            for (int i = 0; i < 5; i++) {
+                float angle = i * petalAngleIncrement;
+                float petalX = x + cos(angle) * size * 0.8f; // Adjust the multiplier for the position of circles
+                float petalY = y + sin(angle) * size * 0.8f;
+                p.ellipse(petalX, petalY, size * 1.1f, size * 1.1f); // Adjust the size of circles as needed
+            }
+        }
+    }
+
+    void startFlowers() 
+    {
+        for (int i = 0; i < 100; i++) 
+        {
+            float x = random(width);
+            float y = random(height);        
+            float vx = random(-2, 2); 
+            float vy = random(-2, 2); 
+            float size = random(20, 40); 
+            int color = color(random(255), random(255), random(255)); 
+            flowers.add(new Flower(x, y, vx, vy, size, color));
+        }
+    }
+
+
     public static void main(String[] args) 
     {
         PApplet.main("C22400154.ambersVisual");
     }
     
-} 
+}
