@@ -123,10 +123,17 @@ public class ambersVisual extends PApplet
         drawTree(treeX1, treeY1, 1.5f);
         drawTree(treeX2, treeY2, 1.5f);
 
-        if (ap.isPlaying() && ap.position() >= 19000 && !flowersStarted) 
+        if (ap.isPlaying()) 
         {
-            flowersStarted = true;
-            startFlowers();
+            int currentPosition = ap.position();
+            if (currentPosition >= 19000 && currentPosition < 45000)
+            {
+                int timeInterval = currentPosition - 19000;
+                if (timeInterval % 7000 <= 40) 
+                {
+                    startFlowers();
+                }
+            }
         }
 
         for (Flower flower : flowers) 
@@ -135,7 +142,7 @@ public class ambersVisual extends PApplet
             flower.display(this); 
         }
 
-
+        
 
     }
 
@@ -248,20 +255,19 @@ public class ambersVisual extends PApplet
         {
             p.noStroke();
             p.fill(color);
-            float petalAngleIncrement = TWO_PI / 5; // Divide the circle into 5 equal parts for the petals
-
+            float petalAngleIncrement = TWO_PI / 5; 
             for (int i = 0; i < 5; i++) {
                 float angle = i * petalAngleIncrement;
-                float petalX = x + cos(angle) * size * 0.8f; // Adjust the multiplier for the position of circles
+                float petalX = x + cos(angle) * size * 0.8f; 
                 float petalY = y + sin(angle) * size * 0.8f;
-                p.ellipse(petalX, petalY, size * 1.1f, size * 1.1f); // Adjust the size of circles as needed
+                p.ellipse(petalX, petalY, size * 1.1f, size * 1.1f);
             }
         }
     }
 
     void startFlowers() 
     {
-        for (int i = 0; i < 100; i++) 
+        for (int i = 0; i < 50; i++) 
         {
             float x = random(width);
             float y = random(height);        
