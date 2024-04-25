@@ -85,7 +85,7 @@ public class ambersVisual extends PApplet
     {
         float average = 0;
         float sum = 0;
-        off += 1; // Assuming off is declared and initialized elsewhere
+        off += 1;
     
         for (int i = 0; i < ab.size(); i++) 
         {
@@ -97,43 +97,45 @@ public class ambersVisual extends PApplet
     
         background(152, 193, 217);
     
-        drawTree(width/2, height/2);
+        drawTree(width/4, height*3/4, 1.5f); //bottom left
+        drawTree(width*3/4, height*3/4, 1.5f); //bottom rightt
     }
 
-    void drawTree(float x, float y) {
+    void drawTree(float x, float y, float scale) 
+    {
         //trunk
-        fill(139, 69, 19);
-        rect(x - 10, y, 20, 150);
-        
+        fill(55, 40, 28);
+        rect(x - 10 * scale, y, 20 * scale, 150 * scale);
+  
         //leaves 
-        fill(34, 139, 34);
+        fill(19, 128, 99);
         
         //top-left
         beginShape();
-        vertex(x, y);
-        bezierVertex(x - 50, y - 30, x - 70, y + 20, x - 50, y + 60);
-        bezierVertex(x - 20, y + 20, x - 40, y - 10, x, y);
+        vertex(x + 10 * scale, y);
+        bezierVertex(x - 50 * scale, y - 60 * scale, x - 70 * scale, y + 20 * scale, x - 50 * scale, y + 60 * scale);
+        bezierVertex(x - 20 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x, y);
         endShape(CLOSE);
-        
+                
         //left
         beginShape();
-        vertex(x - 10, y);
-        bezierVertex(x - 80, y - 30, x - 90, y + 10, x - 70, y + 50);
-        bezierVertex(x - 30, y + 20, x - 40, y - 10, x - 10, y);
+        vertex(x - 10 * scale, y);
+        bezierVertex(x - 80 * scale, y - 30 * scale, x - 90 * scale, y + 10 * scale, x - 70 * scale, y + 50 * scale);
+        bezierVertex(x - 30 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x - 10 * scale, y);
         endShape(CLOSE);
         
-        //right 
+        //right
         beginShape();
-        vertex(x + 10, y);
-        bezierVertex(x + 80, y - 30, x + 90, y + 10, x + 70, y + 50);
-        bezierVertex(x + 30, y + 20, x + 40, y - 10, x + 10, y);
+        vertex(x + 10 * scale, y);
+        bezierVertex(x + 80 * scale, y - 30 * scale, x + 90 * scale, y + 10 * scale, x + 70 * scale, y + 50 * scale);
+        bezierVertex(x + 30 * scale, y + 20 * scale, x + 40 * scale, y - 10 * scale, x + 10 * scale, y);
         endShape(CLOSE);
 
         //top-right
         beginShape();
-        vertex(x + 10, y);
-        bezierVertex(x + 50, y - 60, x + 80, y - 20, x + 50, y + 20);
-        bezierVertex(x + 20, y - 20, x + 30, y - 40, x + 10, y);
+        vertex(x + 10 * scale, y);
+        bezierVertex(x + 50 * scale, y - 60 * scale, x + 80 * scale, y - 20 * scale, x + 50 * scale, y + 20 * scale);
+        bezierVertex(x + 20 * scale, y - 20 * scale, x + 30 * scale, y - 40 * scale, x + 10 * scale, y);
         endShape(CLOSE);
     }
       
