@@ -41,6 +41,7 @@ public class MyVisual2 extends Visual {
             getAudioPlayer().cue(0);
             getAudioPlayer().play();
         }
+        
     }
 
     public void draw() {
