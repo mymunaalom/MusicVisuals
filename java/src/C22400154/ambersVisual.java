@@ -4,16 +4,8 @@ import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
-import processing.*;
 import processing.core.PApplet;
-import processing.core.PImage;
-import ie.tudublin.*;
-import processing.core.*;
 import java.util.ArrayList;
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PConstants;
-
 
 public class ambersVisual extends PApplet 
 {
@@ -31,6 +23,8 @@ public class ambersVisual extends PApplet
     float smoothedAmplitude = 0;
     float outsideRadius = 150;
     float insideRadius = 100;
+
+    ArrayList<Cloud> clouds;
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -68,6 +62,7 @@ public class ambersVisual extends PApplet
         // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
         // am = ai.mix;
         ap = minim.loadFile("Squidward's Tiki Land     Psy-Trance Remix.mp3", 1024);
+
         ap.play();
         ab = ap.mix;
         colorMode(RGB, 255);
@@ -76,6 +71,14 @@ public class ambersVisual extends PApplet
         smoothedY = y;
 
         lerpedBuffer = new float[width];
+
+        clouds = new ArrayList<Cloud>(); 
+
+        for (int i = 0; i < 5; i++) {
+            clouds.add(new Cloud(random(width), random(height * 0.2f), random(50, 100), random(1, 3)));
+
+        }
+        
 
     }
 
@@ -86,7 +89,7 @@ public class ambersVisual extends PApplet
         float average = 0;
         float sum = 0;
         off += 1;
-    
+
         for (int i = 0; i < ab.size(); i++) 
         {
             sum += abs(ab.get(i));
@@ -94,20 +97,26 @@ public class ambersVisual extends PApplet
         }
         average = sum / (float) ab.size();
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
-    
+
+        background(152, 193, 217);
+
         float averageAmplitude = getAverageAmplitude(ab);
 
         float treeX1 = width / 4;
         float treeX2 = width * 3 / 4;
-  
+
         float treeY1 = map(averageAmplitude, 0, 1, height * 0.7f, height * 0.9f);
         float treeY2 = map(averageAmplitude, 0, 1, height * 0.7f, height * 0.9f);
 
-        background(152, 193, 217);
-    
-        //draw leafs at updated positions
+        for (Cloud c : clouds) 
+        {
+            c.move();
+            c.display();
+        }
+
         drawTree(treeX1, treeY1, 1.5f);
         drawTree(treeX2, treeY2, 1.5f);
+
     }
 
     float getAverageAmplitude(AudioBuffer buffer) {
@@ -156,4 +165,45 @@ public class ambersVisual extends PApplet
         endShape(CLOSE);
     }
 
+    class Cloud
+    {
+        float x, y, size, speed;
+
+        Cloud(float x, float y, float size, float speed) 
+        {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.speed = speed;
+        }
+
+        void display() 
+        {
+            noStroke();
+            fill(255);
+            float angleStep = TWO_PI / 10;
+            ellipse(x, y, size * 2, size * 0.8f);
+            for (float angle = 0; angle < TWO_PI; angle += angleStep) 
+            {
+                float vx = x + cos(angle) * size;
+                float vy = y + sin(angle) * size * 0.5f;
+                ellipse(vx, vy, (float)(size * 0.8), (float)(size * 0.8));
+            }
+        }
+
+        void move() 
+        {
+            x += speed;
+            if (x > width + size / 2) 
+            {
+                x = -size / 2;
+            }
+        }
+    }
+
+    public static void main(String[] args) 
+    {
+        PApplet.main("C22400154.ambersVisual");
+    }
+    
 } 
