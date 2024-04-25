@@ -1,23 +1,17 @@
 package c22305863;
 
-import ddf.minim.AudioBuffer;
-import ddf.minim.AudioInput;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
-import processing.core.PApplet;
-import processing.core.PImage;
-import processing.core.PVector;
+import ie.tudublin.OurVisual;
+import processing.core.*;
 import java.util.ArrayList;
+import processing.core.PVector;
+import ddf.minim.*;
 
-public class iriaVisual extends PApplet {
 
-    Minim minim;
-    AudioPlayer ap;
-    AudioInput ai;
+// This is an example of a visual that renders the waveform
+public class IriaVis extends PApplet {
+    OurVisual mv;
+    float cy = 0;
     private AudioBuffer ab;
-
-    int mode = 0;// default mode for switch statement
-
     float[] lerpedBuffer;
     float y = 0; // vertical position
     float ySpeed = 2;
@@ -25,63 +19,27 @@ public class iriaVisual extends PApplet {
     float smoothedAmplitude = 0;
     float outsideRadius = 150;
     float insideRadius = 100;
+    float off = 0;
 
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
     PImage tikiface;
     PVector tikiPos;
 
-    public void keyPressed() {
-        if (key >= '0' && key <= '9') {
-            mode = key - '0';
-        }
-        if (keyCode == ' ') {
-            if (ap.isPlaying()) {
-                ap.pause();
-            } else {
-                ap.rewind();
-                ap.play();
-            }
-        }
-        switch (mode) {
-            case 0:
-                draw();
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public void settings() {
-        size(1024, 600, P3D);
-        // fullScreen(P3D, SPAN);
-        // size(1024,700);
-    }
-
-    public void setup() {
-        minim = new Minim(this);
-        // Uncomment this to use the microphone
-        // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        // am = ai.mix;
-        ap = minim.loadFile("Squidward's Tiki Land     Psy-Trance Remix.mp3", 1024);
-        ap.play();
-        ab = ap.mix;
-        colorMode(HSB);
-
+    public IriaVis(OurVisual mv) {
+        this.mv = mv;
+        cy = this.mv.height / 2;
         y = height / 2;
         smoothedY = y;
 
-        textureMode(NORMAL);
-
         lerpedBuffer = new float[width];
 
+    }
+    public void setup() {
+        // Load image here
         tikiface = loadImage("tiki_face3.png");
         tikiPos = new PVector(width / 2, height / 12);
-
     }
-
-    float off = 0;
-
+    
     public void reactToMouseMovement() {
         // make coconuts appear on screen when clicked by mouse
         if (mousePressed) {
@@ -155,10 +113,11 @@ public class iriaVisual extends PApplet {
 
     }
 
-    public void draw() {
-
+    public void render() {
+        
         float average = 0;
         float sum = 0;
+        
         off += 1;
         // calculate sum and average of the samples
         // lerp each element of buffer;
@@ -184,15 +143,16 @@ public class iriaVisual extends PApplet {
 
         for (int i = 0; i < ab.size(); i++) {
             float hue = map(i, 0, ab.size(), 56, 0);
+          
             stroke(hue, 100, 100);
             noFill();
             circle(cx, cy, average * i * 2);
         }
         for (int i = 0; i < ab.size(); i++) {
-
-            float hue = map(i, 0, ab.size(), 0, 121);
             float s = lerpedBuffer[i] * cx;
+            float hue = map(i, 0, ab.size(), 0, 121);
             stroke(hue, 255, 300);
+           
             // cool line that moves with the music
             // cos and sin functions to make line move in a circular way
             // two_pi is a full circle
@@ -202,7 +162,6 @@ public class iriaVisual extends PApplet {
         }
         for (int i = 0; i < ab.size(); i++) {
             float hue = map(i, 0, ab.size(), 290, 51);
-
             stroke(hue, 100, 100);
             // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
@@ -211,4 +170,5 @@ public class iriaVisual extends PApplet {
         tiki_face();
 
     }
+
 }
