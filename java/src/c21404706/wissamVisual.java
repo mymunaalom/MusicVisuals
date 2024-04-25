@@ -72,7 +72,7 @@ public class wissamVisual extends PApplet {
             float s = lerpedBuffer[i] * cx * 2;
 
             // from left side to right
-            stroke(hue, 255, 255);
+            stroke(40, 255, 255);
             line(0, i, s, i);
             // from right side to left
             line(width, i, width - s, i);
@@ -119,18 +119,18 @@ public class wissamVisual extends PApplet {
         float angle = 0;
         float angleStep = 180.0f/num;
             
-        beginShape(TRIANGLE_STRIP); 
-        for (int i = 0; i <= numPoints; i++) {
-            float px = mouseX + cos(radians(angle)) * outsideRadius;
-            float py = mouseY + sin(radians(angle)) * outsideRadius;
-            angle += angleStep;
-            vertex(px, py);
-            px = mouseX + cos(radians(angle)) * insideRadius;
-            py = mouseY + sin(radians(angle)) * insideRadius;
-            vertex(px, py); 
-            angle += angleStep;
+        // Ocean wave parameters
+        float waveSpeed = 0.0000000000000000001f; // Speed of the waves
+        float waveAmplitude = 10; // Amplitude of the waves
+        float waveFrequency = 0.025f; // Frequency of the waves
+
+        for (int z = 0; z < width; z++) {
+            stroke(160, 255, 255); // HSB color (blue)
+            float waveHeight = sin(z * waveFrequency + off) * waveAmplitude;
+            line(z, height * 2 / 3 + waveHeight, z, height); // Drawing waves from the center of the canvas to the bottom
         }
-        endShape();
+
+        off += waveSpeed; // Incrementing the offset for the waves animation
            
     } 
 
