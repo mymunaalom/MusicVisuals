@@ -23,12 +23,15 @@ public class iriaVisual extends PApplet {
     float ySpeed = 2;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
-    float outsideRadius = 150;
-    float insideRadius = 100;
 
+  
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
     PImage tikiface;
+    PImage skirt;
     PVector tikiPos;
+    PVector tikiPos2;
+    PVector skirtPos;
+    PVector skirtPos2;
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -76,8 +79,9 @@ public class iriaVisual extends PApplet {
         lerpedBuffer = new float[width];
 
         tikiface = loadImage("tiki_face3.png");
+        skirt = loadImage("skirt.png");
         tikiPos = new PVector(width / 2, height / 12);
-
+       
     }
 
     float off = 0;
@@ -101,12 +105,19 @@ public class iriaVisual extends PApplet {
             PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
             PVector tikiPos2 = new PVector(tikiX, height / 1.5f + amplitude);
 
+            //skirt 
+            PVector skirtPos = new PVector(tikiX-30, height / 3.5f + amplitude);
+            PVector skirtPos2 = new PVector(tikiX, height / 0.5f + amplitude);
+
             float hue = map(amplitude, 0, 50, 0, 360);
             fill(hue, 100, 100);
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
             image(tikiface, tikiPos2.x, tikiPos2.y);
+            image(skirt, skirtPos.x, skirtPos.y);
+            image(skirt, skirtPos2.x, skirtPos2.y);
+
 
         }
 
@@ -155,6 +166,7 @@ public class iriaVisual extends PApplet {
 
     }
 
+
     public void draw() {
 
         float average = 0;
@@ -183,7 +195,7 @@ public class iriaVisual extends PApplet {
         }
 
         for (int i = 0; i < ab.size(); i++) {
-            float hue = map(i, 0, ab.size(), 56, 0);
+            float hue = map(i, 0, ab.size(), 50, 0);
             stroke(hue, 100, 100);
             noFill();
             circle(cx, cy, average * i * 2);
@@ -203,11 +215,11 @@ public class iriaVisual extends PApplet {
         for (int i = 0; i < ab.size(); i++) {
             float hue = map(i, 0, ab.size(), 290, 51);
 
-            stroke(hue, 100, 100);
             // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
         }
 
+     
         tiki_face();
 
     }

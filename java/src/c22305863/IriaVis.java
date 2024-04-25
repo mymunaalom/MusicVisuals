@@ -4,8 +4,7 @@ import ie.tudublin.OurVisual;
 import ie.tudublin.VisualException;
 import processing.core.*;
 import java.util.ArrayList;
-
-import ddf.minim.*;
+import ddf.minim.*; 
 
 
 // This is an example of a visual that renders the waveform
@@ -32,6 +31,8 @@ public class IriaVis extends PApplet {
         cy = this.mv.height / 2;
         y = height / 2;
         smoothedY = y;
+        
+        size(1024, 600, P3D);
 
         lerpedBuffer = new float[width];
         //  Minim minim = new Minim(this);

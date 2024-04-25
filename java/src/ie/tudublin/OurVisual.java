@@ -53,6 +53,7 @@ public class OurVisual extends Visual {
     }
 
     public void draw() {
+        super.draw();
          background(0);
 
         // switch case method
@@ -62,8 +63,7 @@ public class OurVisual extends Visual {
                 wf.render();
                 break;
             case '2':
-                ip.render(getAudioBuffer());
-                
+                ip.render(getAudioBuffer());                
                 break;
             
             default:
