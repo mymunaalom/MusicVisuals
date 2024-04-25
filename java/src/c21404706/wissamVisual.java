@@ -6,8 +6,6 @@ import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import processing.*;
-import processing.core.PApplet;
-import processing.core.PImage;
 import ie.tudublin.*;
 import processing.core.*;
 import java.util.ArrayList;
@@ -24,6 +22,10 @@ public class wissamVisual extends PApplet {
     float y = 0;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
+
+    PImage bananaPic;
+    ArrayList<Banana> bananas;
+
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -59,6 +61,16 @@ public class wissamVisual extends PApplet {
         smoothedY = y;
 
         lerpedBuffer = new float[width];
+
+        bananaPic = loadImage("banana_pic.png");
+        bananas = new ArrayList<Banana>();
+
+        int numBananas = 30;
+        float bananaSpacing = width / (numBananas + 1); // calculate spacing between bananas
+        for (int i = 1; i <= numBananas; i++) {
+            float bananaX = i * bananaSpacing - 100;
+            bananas.add(new Banana(bananaX, 0)); // Add bananas to the list
+        }
     }
 
     float off = 0;
@@ -131,6 +143,23 @@ public class wissamVisual extends PApplet {
         }
 
         off += waveSpeed; // Incrementing the offset for the waves animation
+
+        int numBananas = 15;
+        float bananaSpacing = width / (numBananas + 1); // calculate spacing between tikis
+
+
+        for (int i = 1; i <= numBananas; i++) {
+            float bananaX  = i * bananaSpacing - 100; // Calculate X position
+
+            // move bananas with music
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
+            float bananaY = -amplitude * 0.5f;
+            float bananaSize = map(amplitude, 0, 50, 10, 50);
+
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
+
+        }
            
     } 
 
@@ -154,9 +183,49 @@ public class wissamVisual extends PApplet {
         float cx = width / 2;
         float cy = height / 2;
 
+        for (Banana banana : bananas) {
+            banana.display();
+        }
+
 
         //calling outline for visiual
         visiual();
     }
+
+    class Banana {
+        float x, y;
+        int timesReachedEnd;
+
+        Banana(float x, float y) {
+            this.x = x;
+            this.y = y;
+            timesReachedEnd = 0;
+        }
+
+        void display() {
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
+            float bananaY = y - amplitude * 0.5f;
+            float bananaSize = map(amplitude, 0, 50, 10, 50);
+
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
+            image(bananaPic, x, bananaY, bananaSize, bananaSize * 2);
+            
+            y += 2;
+            if (y > height) {
+                y = 0; // coconut goes back up when it reaches the bottom
+                timesReachedEnd++;
+            }
+            if (timesReachedEnd >= 2) {
+                bananas.remove(this); // remove coconut from the list if reached the end twice
+            }
+        }
+    }
+
+
+
+
+
+
 
 }
