@@ -2,6 +2,7 @@ package ie.tudublin;
 
 import c22305863.IriaVis;
 
+import ddf.minim.AudioBuffer;
 import example.AudioBandsVisual;
 import example.WaveForm;
 
@@ -15,9 +16,11 @@ public class OurVisual extends Visual {
     int color;
     boolean isPlaying = false;
 
+   
+
     public void settings() {
         // size(1024, 500);
-        //size(1024, 600, P3D);
+        size(1024, 600, P3D);
         // Use this to make fullscreen
          //fullScreen();
 
@@ -34,8 +37,8 @@ public class OurVisual extends Visual {
         // Call this instead to read audio from the microphone
         // startListening();
 
-        // wf = new WaveForm(this);
-        // abv = new AudioBandsVisual(this);
+        wf = new WaveForm(this);
+        abv = new AudioBandsVisual(this);
         ip = new IriaVis(this);
     }
 
@@ -50,24 +53,19 @@ public class OurVisual extends Visual {
     }
 
     public void draw() {
-        // background(0);
+         background(0);
 
         // switch case method
         switch (mode) {
-            case '0':
-                ip.render();
-                break;
             case '1':
-
+                
+                wf.render();
                 break;
             case '2':
-
+                ip.render(getAudioBuffer());
+                
                 break;
-            case '3':
-
-                break;
-            case '4':
-                break;
+            
             default:
                 break;
         }

@@ -1,9 +1,10 @@
 package c22305863;
 
 import ie.tudublin.OurVisual;
+import ie.tudublin.VisualException;
 import processing.core.*;
 import java.util.ArrayList;
-import processing.core.PVector;
+
 import ddf.minim.*;
 
 
@@ -27,12 +28,21 @@ public class IriaVis extends PApplet {
 
     public IriaVis(OurVisual mv) {
         this.mv = mv;
+        this.ab = mv.getAudioBuffer();
         cy = this.mv.height / 2;
         y = height / 2;
         smoothedY = y;
 
         lerpedBuffer = new float[width];
-
+        //  Minim minim = new Minim(this);
+        // // AudioPlayer player = minim.loadFile("your_audio_file.mp3"); // Replace "your_audio_file.mp3" with your audio file path
+        // // ab = player.mix;
+        // AudioPlayer player = minim.loadFile("your_audio_file.mp3"); // Replace "your_audio_file.mp3" with your audio file path
+        // if (player != null && player.isPlaying()) {
+        //     ab = player.mix; // Initialize ab with the mix AudioBuffer of the player
+        // } else {
+        //     System.err.println("Error loading audio file or audio player is not playing.");
+        // }
     }
     public void setup() {
         // Load image here
@@ -113,17 +123,22 @@ public class IriaVis extends PApplet {
 
     }
 
-    public void render() {
-        
+    public void render(AudioBuffer ab) {
+        this.ab = ab;
         float average = 0;
         float sum = 0;
         
         off += 1;
         // calculate sum and average of the samples
         // lerp each element of buffer;
+        lerpedBuffer = new float[ab.size()];
+
         for (int i = 0; i < ab.size(); i++) {
             sum += abs(ab.get(i));
-            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
+            // Ensure lerpedBuffer is not accessed beyond its bounds
+            if (i < lerpedBuffer.length) {
+                lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
+            }
         }
         average = sum / (float) ab.size();
 
@@ -168,6 +183,7 @@ public class IriaVis extends PApplet {
         }
 
         tiki_face();
+         
 
     }
 
