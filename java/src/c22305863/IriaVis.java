@@ -2,9 +2,9 @@ package c22305863;
 
 import ie.tudublin.OurVisual;
 import processing.core.*;
-import ddf.minim.AudioBuffer;
 import java.util.ArrayList;
 import processing.core.PVector;
+import ddf.minim.*;
 
 
 // This is an example of a visual that renders the waveform
@@ -33,10 +33,13 @@ public class IriaVis extends PApplet {
 
         lerpedBuffer = new float[width];
 
+    }
+    public void setup() {
+        // Load image here
         tikiface = loadImage("tiki_face3.png");
         tikiPos = new PVector(width / 2, height / 12);
     }
-
+    
     public void reactToMouseMovement() {
         // make coconuts appear on screen when clicked by mouse
         if (mousePressed) {
