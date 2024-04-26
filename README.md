@@ -1,8 +1,8 @@
 # Music Visualiser Project
 
-Name:
+Name:Wissam Hadjarab
 
-Student Number: 
+Student Number: C21404706
 
 ## Instructions
 - Fork this repository and use it a starter project for your assignment
@@ -12,10 +12,15 @@ Student Number:
 - Check out the WaveForm and AudioBandsVisual for examples of how to call the Processing functions from other classes that are not subclasses of PApplet
 
 # Description of the assignment
+For our group assignment we chose to do the music visualiser as a team. We chose the squidward tiki song from spongebob for a more light hearted visiualer and stuck to the theme of spongebob throughout the different images.
 
 # Instructions
 
 # How it works
+We initially worked on a seperate file each, one visiualiser each and designed and coded that section on our own.
+For my file I included different elements whilst in line with the theme. I included a background of a grid along with an imported picture of the spongebob beach background too to give it more emphasis. 
+I created a outline of the screen to go in beat and pulse with the song with different altitudes and colour to give more dimention and a 'pop' to add something to the screen that will stand out and resemble to frequencies of the audio.
+I also wanted to include a moving element onto the screen and tried to keep it with theme so I decided to make an ocean wave based on one frequency wave from the audio. I 
 
 # What I am most proud of in the assignment
 
@@ -77,13 +82,3 @@ This is an image using an absolute URL:
 This is a youtube video:
 
 [![YouTube](http://img.youtube.com/vi/J2kHSSFA4NU/0.jpg)](https://www.youtube.com/watch?v=J2kHSSFA4NU)
-
-This is a table:
-
-| Heading 1 | Heading 2 |
-|-----------|-----------|
-|Some stuff | Some more stuff in this column |
-|Some stuff | Some more stuff in this column |
-|Some stuff | Some more stuff in this column |
-|Some stuff | Some more stuff in this column |
-
