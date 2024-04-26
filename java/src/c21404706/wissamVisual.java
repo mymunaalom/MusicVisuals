@@ -68,7 +68,7 @@ public class wissamVisual extends PApplet {
         int numBananas = 30;
         float bananaSpacing = width / (numBananas + 1); // calculate spacing between bananas
         for (int i = 1; i <= numBananas; i++) {
-            float bananaX = i * bananaSpacing - 100;
+            float bananaX = i * bananaSpacing ;
             bananas.add(new Banana(bananaX, 0)); // Add bananas to the list
         }
     }
@@ -204,7 +204,8 @@ public class wissamVisual extends PApplet {
 
         void display() {
             float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
-            float bananaY = y - amplitude * 0.5f;
+            float bananaX = x * (width / 1024.0f); // Adjust x position for different screen widths
+            float bananaY = y * (height / 600.0f);
             float bananaSize = map(amplitude, 0, 50, 10, 50);
 
             float hue = map(amplitude, 0, 50, 0, 360);
