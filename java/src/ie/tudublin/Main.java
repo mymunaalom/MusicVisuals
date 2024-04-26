@@ -5,6 +5,7 @@ import c22305863.iriaVisual;
 
 public class Main {
     iriaVisual ip;
+    wissamVisual wv;
 
     int mode = 0;
 
@@ -12,6 +13,7 @@ public class Main {
         String[] a = { "MAIN" };
 
         ip = new iriaVisual(); //iriaVisual class
+        wv = new wissamVisual(); //wissamVisual class
         processing.core.PApplet.runSketch(a, ip);
     }
 
@@ -24,7 +26,8 @@ public class Main {
                 mode = 1;
                 break;
             case '2':
-                
+                wv.setup();
+             
                 break;
             case ' ':
                 

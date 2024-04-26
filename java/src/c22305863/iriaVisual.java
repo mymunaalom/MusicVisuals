@@ -44,15 +44,8 @@ public class iriaVisual extends PApplet {
                 ap.play();
             }
         }
-        switch (mode) {
-            case 0:
-                draw();
-                break;
-
-            default:
-                break;
-        }
     }
+    
 
     public void settings() {
         size(1024, 600, P3D);
