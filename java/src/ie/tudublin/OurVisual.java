@@ -2,6 +2,7 @@
 package ie.tudublin;
 
 import c22305863.IriaVis;
+import c22368271.MusicVisualizer;
 
 import ddf.minim.AudioBuffer;
 import example.AudioBandsVisual;
@@ -11,6 +12,7 @@ public class OurVisual extends Visual {
     WaveForm wf;
     AudioBandsVisual abv;
     IriaVis ip;
+    MusicVisualizer mv;
 
     char mode = ' ';
     int color;
@@ -38,6 +40,7 @@ public class OurVisual extends Visual {
         wf = new WaveForm(this);
         abv = new AudioBandsVisual(this);
         ip = new IriaVis(this);
+        mv = new MusicVisualizer();
     }
 
     public void keyPressed() {
@@ -60,8 +63,13 @@ public class OurVisual extends Visual {
                 wf.render();
                 break;
             case '2':
+<<<<<<< HEAD
+                mv.render(getAudioBuffer());
+                
+=======
                 ip.render(getAudioBuffer());
 
+>>>>>>> 4394772de7d329c8e90aee7f379cd80f97a66b27
                 break;
 
             default:
