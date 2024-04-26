@@ -23,12 +23,14 @@ public class iriaVisual extends PApplet {
     float ySpeed = 2;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
-    float outsideRadius = 150;
-    float insideRadius = 100;
 
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
     PImage tikiface;
+    PImage skirt;
     PVector tikiPos;
+    PVector tikiPos2;
+    PVector skirtPos;
+    PVector skirtPos2;
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -76,6 +78,7 @@ public class iriaVisual extends PApplet {
         lerpedBuffer = new float[width];
 
         tikiface = loadImage("tiki_face3.png");
+        skirt = loadImage("skirt.png");
         tikiPos = new PVector(width / 2, height / 12);
 
     }
@@ -94,19 +97,25 @@ public class iriaVisual extends PApplet {
         float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
         for (int i = 1; i <= numTikis; i++) {
+
             float tikiX = i * tikiSpacing - 100; // Calculate X position
 
             // move tiki with music
             float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
             PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
-            PVector tikiPos2 = new PVector(tikiX, height / 1.5f + amplitude);
+            PVector tikiPos2 = new PVector(tikiX, height / 1.50f + amplitude);
 
-            float hue = map(amplitude, 0, 50, 0, 360);
-            fill(hue, 100, 100);
+            // skirt
+            PVector skirtPos = new PVector(tikiX - 10, height / 3.3f + amplitude);
+            PVector skirtPos2 = new PVector(tikiX - 10, height / 1.13f + amplitude);
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
             image(tikiface, tikiPos2.x, tikiPos2.y);
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
+            image(skirt, skirtPos.x, skirtPos.y);
+            image(skirt, skirtPos2.x, skirtPos2.y);
 
         }
 
@@ -142,7 +151,7 @@ public class iriaVisual extends PApplet {
             popMatrix(); // restore the previous transformation matrix
 
             // makes coconut falls down
-            position.y += 2;
+            position.y += 3;
             if (position.y > height) {
                 position.y = 0; // coconut goes back up when it reaches the bottom
                 timesReachedEnd++;
@@ -183,16 +192,19 @@ public class iriaVisual extends PApplet {
         }
 
         for (int i = 0; i < ab.size(); i++) {
-            float hue = map(i, 0, ab.size(), 56, 0);
+            float hue = map(i, 0, ab.size(), 297, 58);
             stroke(hue, 100, 100);
             noFill();
-            circle(cx, cy, average * i * 2);
+            circle(cx, cy, average * i * 4 * smoothedAmplitude);
+            // line that surrounds the border of the circle
+            line(cx, cy, cx + cos(TWO_PI / average * i) * 100, cy + sin(TWO_PI / average * i) * 100);
+
         }
         for (int i = 0; i < ab.size(); i++) {
 
-            float hue = map(i, 0, ab.size(), 0, 121);
+            float hue = map(i, 0, ab.size(), 50, 0);
             float s = lerpedBuffer[i] * cx;
-            stroke(hue, 255, 300);
+            stroke(hue, 100, 100);
             // cool line that moves with the music
             // cos and sin functions to make line move in a circular way
             // two_pi is a full circle
@@ -203,7 +215,6 @@ public class iriaVisual extends PApplet {
         for (int i = 0; i < ab.size(); i++) {
             float hue = map(i, 0, ab.size(), 290, 51);
 
-            stroke(hue, 100, 100);
             // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
         }
