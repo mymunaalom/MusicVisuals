@@ -1,83 +1,56 @@
 package c22305863;
 
-import ddf.minim.AudioBuffer;
-import ddf.minim.AudioInput;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
-import processing.core.PApplet;
-import processing.core.PImage;
-import processing.core.PVector;
+import ie.tudublin.OurVisual;
+import ie.tudublin.VisualException;
+import processing.core.*;
 import java.util.ArrayList;
 
-public class iriaVisual extends PApplet {
+import ddf.minim.*;
 
-    Minim minim;
-    AudioPlayer ap;
-    AudioInput ai;
+
+// This is an example of a visual that renders the waveform
+public class IriaVis extends PApplet {
+    OurVisual mv;
+    float cy = 0;
     private AudioBuffer ab;
-
-    int mode = 0;// default mode for switch statement
-
     float[] lerpedBuffer;
     float y = 0; // vertical position
     float ySpeed = 2;
     float smoothedY = 0;
     float smoothedAmplitude = 0;
+    float outsideRadius = 150;
+    float insideRadius = 100;
+    float off = 0;
 
     ArrayList<Coconut> coconuts = new ArrayList<Coconut>(); // array to store coconuts
     PImage tikiface;
-    PImage skirt;
     PVector tikiPos;
-    PVector tikiPos2;
-    PVector skirtPos;
-    PVector skirtPos2;
 
-    public void keyPressed() {
-        if (key >= '0' && key <= '9') {
-            mode = key - '0';
-        }
-        if (keyCode == ' ') {
-            if (ap.isPlaying()) {
-                ap.pause();
-            } else {
-                ap.rewind();
-                ap.play();
-            }
-        }
-    }
-    
-
-    public void settings() {
-        size(1024, 600, P3D);
-        // fullScreen(P3D, SPAN);
-        // size(1024,700);
-    }
-
-    public void setup() {
-        minim = new Minim(this);
-        // Uncomment this to use the microphone
-        // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        // am = ai.mix;
-        ap = minim.loadFile("Squidward's Tiki Land     Psy-Trance Remix.mp3", 1024);
-        ap.play();
-        ab = ap.mix;
-        colorMode(HSB);
-
+    public IriaVis(OurVisual mv) {
+        this.mv = mv;
+        this.ab = mv.getAudioBuffer();
+        cy = this.mv.height / 2;
         y = height / 2;
         smoothedY = y;
 
-        textureMode(NORMAL);
-
         lerpedBuffer = new float[width];
-
-        tikiface = loadImage("tiki_face3.png");
-        skirt = loadImage("skirt.png");
-        tikiPos = new PVector(width / 2, height / 12);
-
+        //  Minim minim = new Minim(this);
+        // // AudioPlayer player = minim.loadFile("your_audio_file.mp3"); // Replace "your_audio_file.mp3" with your audio file path
+        // // ab = player.mix;
+        // AudioPlayer player = minim.loadFile("your_audio_file.mp3"); // Replace "your_audio_file.mp3" with your audio file path
+        // if (player != null && player.isPlaying()) {
+        //     ab = player.mix; // Initialize ab with the mix AudioBuffer of the player
+        // } else {
+        //     System.err.println("Error loading audio file or audio player is not playing.");
+        // }
     }
-
-    float off = 0;
-
+    public void setup() {
+        // Load image here
+        colorMode(HSB, 360, 100, 100); // mode HSB
+        tikiface = loadImage("tiki_face3.png");
+        tikiPos = new PVector(width / 2, height / 12);
+    }
+    
     public void reactToMouseMovement() {
         // make coconuts appear on screen when clicked by mouse
         if (mousePressed) {
@@ -90,25 +63,19 @@ public class iriaVisual extends PApplet {
         float tikiSpacing = width / (numTikis + 1); // calculate spacing between tikis
 
         for (int i = 1; i <= numTikis; i++) {
-
             float tikiX = i * tikiSpacing - 100; // Calculate X position
 
             // move tiki with music
             float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
             PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
-            PVector tikiPos2 = new PVector(tikiX, height / 1.50f + amplitude);
+            PVector tikiPos2 = new PVector(tikiX, height / 1.5f + amplitude);
 
-            // skirt
-            PVector skirtPos = new PVector(tikiX , height / 3.4f + amplitude);
-            PVector skirtPos2 = new PVector(tikiX , height / 1.14f + amplitude);
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
             image(tikiface, tikiPos2.x, tikiPos2.y);
-            float hue = map(amplitude, 0, 50, 0, 360);
-            fill(hue, 100, 100);
-            image(skirt, skirtPos.x, skirtPos.y);
-            image(skirt, skirtPos2.x, skirtPos2.y);
 
         }
 
@@ -144,7 +111,7 @@ public class iriaVisual extends PApplet {
             popMatrix(); // restore the previous transformation matrix
 
             // makes coconut falls down
-            position.y += 3;
+            position.y += 2;
             if (position.y > height) {
                 position.y = 0; // coconut goes back up when it reaches the bottom
                 timesReachedEnd++;
@@ -157,16 +124,22 @@ public class iriaVisual extends PApplet {
 
     }
 
-    public void draw() {
-
+    public void render(AudioBuffer ab) {
+        this.ab = ab;
         float average = 0;
         float sum = 0;
+        
         off += 1;
         // calculate sum and average of the samples
         // lerp each element of buffer;
+        lerpedBuffer = new float[ab.size()];
+
         for (int i = 0; i < ab.size(); i++) {
             sum += abs(ab.get(i));
-            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
+            // Ensure lerpedBuffer is not accessed beyond its bounds
+            if (i < lerpedBuffer.length) {
+                lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
+            }
         }
         average = sum / (float) ab.size();
 
@@ -175,7 +148,7 @@ public class iriaVisual extends PApplet {
         float cx = width / 2;
         float cy = height / 2;
 
-        colorMode(HSB, 360, 100, 100); // mode HSB
+        
         background(209, 58, 100);
 
         reactToMouseMovement();
@@ -185,19 +158,17 @@ public class iriaVisual extends PApplet {
         }
 
         for (int i = 0; i < ab.size(); i++) {
-            float hue = map(i, 0, ab.size(), 297, 58);
+            float hue = map(i, 0, ab.size(), 56, 0);
+          
             stroke(hue, 100, 100);
             noFill();
-            circle(cx, cy, average * i * 4 * smoothedAmplitude);
-            // line that surrounds the border of the circle
-            line(cx, cy, cx + cos(TWO_PI / average * i) * 100, cy + sin(TWO_PI / average * i) * 100);
-
+            circle(cx, cy, average * i * 2);
         }
         for (int i = 0; i < ab.size(); i++) {
-
-            float hue = map(i, 0, ab.size(), 50, 0);
             float s = lerpedBuffer[i] * cx;
-            stroke(hue, 100, 100);
+            float hue = map(i, 0, ab.size(), 0, 121);
+            stroke(hue, 255, 300);
+           
             // cool line that moves with the music
             // cos and sin functions to make line move in a circular way
             // two_pi is a full circle
@@ -207,12 +178,14 @@ public class iriaVisual extends PApplet {
         }
         for (int i = 0; i < ab.size(); i++) {
             float hue = map(i, 0, ab.size(), 290, 51);
-
+            stroke(hue, 100, 100);
             // circle to be infront of the cool line
             circle(cx, cy, average * i / 8);
         }
 
         tiki_face();
+         
 
     }
+
 }
