@@ -63,13 +63,8 @@ public class OurVisual extends Visual {
                 wf.render();
                 break;
             case '2':
-<<<<<<< HEAD
-                mv.render(getAudioBuffer());
-                
-=======
                 ip.render(getAudioBuffer());
 
->>>>>>> 4394772de7d329c8e90aee7f379cd80f97a66b27
                 break;
 
             default:
