@@ -46,6 +46,7 @@ public class IriaVis extends PApplet {
     }
     public void setup() {
         // Load image here
+        colorMode(HSB, 360, 100, 100); // mode HSB
         tikiface = loadImage("tiki_face3.png");
         tikiPos = new PVector(width / 2, height / 12);
     }
@@ -147,7 +148,7 @@ public class IriaVis extends PApplet {
         float cx = width / 2;
         float cy = height / 2;
 
-        colorMode(HSB, 360, 100, 100); // mode HSB
+        
         background(209, 58, 100);
 
         reactToMouseMovement();
