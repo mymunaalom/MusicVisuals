@@ -38,10 +38,17 @@ public class Allfiles extends PApplet {
     ArrayList<Banana> bananas;
 
     
-    PImage flower;
+    PImage flowerM;
     float speedX, speedY;
     float flowerX, flowerY; // flower pos
     PVector flowerPos;
+
+    float outsideRadius = 150;
+    float insideRadius = 100;
+
+    ArrayList<Cloud> clouds;
+    ArrayList<Flower> flowers;
+    boolean flowersStarted = false;
 
     public void keyPressed() {
         if (key >= '0' && key <= '9') {
@@ -73,6 +80,11 @@ public class Allfiles extends PApplet {
         ab = ap.mix;
         colorMode(HSB);
 
+        
+
+        bg = loadImage("spongeBG.png");
+        flowerM = loadImage("spongeFlower.png");
+
         y = height / 2;
         smoothedY = y;
 
@@ -97,8 +109,14 @@ public class Allfiles extends PApplet {
         }
         fft = new FFT(ap.bufferSize(), ap.sampleRate());
 
-        bg = loadImage("spongeBG.png");
-        flower = loadImage("spongeFlower.png");
+        clouds = new ArrayList<Cloud>(); 
+
+        for (int i = 0; i < 5; i++) {
+            clouds.add(new Cloud(random(width), random(height * 0.2f), random(50, 100), random(1, 3)));
+
+        }
+
+        flowers = new ArrayList<Flower>();
 
     }
 
@@ -124,11 +142,11 @@ public class Allfiles extends PApplet {
                 // move tiki with music
                 float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
                 PVector tikiPos = new PVector(tikiX, height / 12 + amplitude);
-                PVector tikiPos2 = new PVector(tikiX, height / 1.50f + amplitude);
+                PVector tikiPos2 = new PVector(tikiX, height / 1.5f + amplitude);
     
                 // skirt
-                PVector skirtPos = new PVector(tikiX, height / 3.4f + amplitude);
-                PVector skirtPos2 = new PVector(tikiX, height / 1.14f + amplitude);
+                PVector skirtPos = new PVector(tikiX+6.5f, height /3.58f + amplitude);
+                PVector skirtPos2 = new PVector(tikiX+6.6f, height / 1.16f + amplitude);
     
                 // draw tiki face at the updated position
                 image(tikiface, tikiPos.x, tikiPos.y);
@@ -387,16 +405,27 @@ public class Allfiles extends PApplet {
         float cx = width / 2;
         float cy = height / 2;
 
-        for (Banana banana : bananas) {
-            banana.display();
+            // Create a list to hold bananas that need to be removed
+    ArrayList<Banana> bananasToRemove = new ArrayList<>();
+
+    // Iterate over the bananas list
+    for (Banana banana : bananas) {
+        banana.display();
+        // Check if the banana needs to be removed
+        if (banana.timesReachedEnd >= 2) {
+            bananasToRemove.add(banana);
         }
+    }
+
+    // Remove the bananas that need to be removed
+    bananas.removeAll(bananasToRemove);
 
         // calling outline for visiual
         visiual();
 
     }
 
-    public void flowers(float amplitude) {
+    public void flowersM(float amplitude) {
         int numflowers = 7;
         float angleIn = TWO_PI / numflowers;
 
@@ -407,7 +436,7 @@ public class Allfiles extends PApplet {
             float radius = flowerSize * (i + 10);
             float flowerPosX = width / 2 + cos(angle) * radius-100;
             float flowerPosY = height / 2 + sin(angle) * radius-100;
-            image(flower, flowerPosX, flowerPosY, flower.width / 6, flower.height / 6);
+            image(flowerM, flowerPosX, flowerPosY, flowerM.width / 6, flowerM.height / 6);
         }
     }
     void drawStrobeLights() {
@@ -448,7 +477,7 @@ public class Allfiles extends PApplet {
         }
         average = sum / (float) ab.size();
 
-        flowers(smoothedAmplitude);
+        flowersM(smoothedAmplitude);
 
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
         float squareSize = map(smoothedAmplitude, 0, 1, 10, 400);
@@ -469,6 +498,197 @@ public class Allfiles extends PApplet {
 
         drawStrobeLights();
     }
+
+    float getAverageAmplitude(AudioBuffer buffer) {
+        float sum = 0;
+        for (int i = 0; i < buffer.size(); i++) {
+          sum += abs(buffer.get(i));
+        }
+        return sum / buffer.size();
+    }
+
+    void drawTree(float x, float y, float scale) 
+    {
+        //trunk
+        fill(55, 40, 28);
+        rect(x - 10 * scale, y, 20 * scale, 150 * scale);
+    
+        //leaves 
+        fill(19, 128, 99);
+        
+        //topleft
+        beginShape();
+        vertex(x + 10 * scale, y);
+        bezierVertex(x - 50 * scale, y - 60 * scale, x - 70 * scale, y + 20 * scale, x - 50 * scale, y + 60 * scale);
+        bezierVertex(x - 20 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x, y);
+        endShape(CLOSE);
+                
+        //left
+        beginShape();
+        vertex(x - 10 * scale, y);
+        bezierVertex(x - 80 * scale, y - 30 * scale, x - 90 * scale, y + 10 * scale, x - 70 * scale, y + 50 * scale);
+        bezierVertex(x - 30 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x - 10 * scale, y);
+        endShape(CLOSE);
+        
+        //right
+        beginShape();
+        vertex(x + 10 * scale, y);
+        bezierVertex(x + 80 * scale, y - 30 * scale, x + 90 * scale, y + 10 * scale, x + 70 * scale, y + 50 * scale);
+        bezierVertex(x + 30 * scale, y + 20 * scale, x + 40 * scale, y - 10 * scale, x + 10 * scale, y);
+        endShape(CLOSE);
+
+        //topright
+        beginShape();
+        vertex(x + 10 * scale, y);
+        bezierVertex(x + 50 * scale, y - 60 * scale, x + 80 * scale, y - 20 * scale, x + 50 * scale, y + 20 * scale);
+        bezierVertex(x + 20 * scale, y - 20 * scale, x + 30 * scale, y - 40 * scale, x + 10 * scale, y);
+        endShape(CLOSE);
+    }
+
+    class Cloud
+    {
+        float x, y, size, speed;
+
+        Cloud(float x, float y, float size, float speed) 
+        {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.speed = speed;
+        }
+
+        void display() 
+        {
+            noStroke();
+            fill(255);
+            float angleStep = TWO_PI / 10;
+            ellipse(x, y, size * 2, size * 0.8f);
+            for (float angle = 0; angle < TWO_PI; angle += angleStep) 
+            {
+                float vx = x + cos(angle) * size;
+                float vy = y + sin(angle) * size * 0.5f;
+                ellipse(vx, vy, (float)(size * 0.8), (float)(size * 0.8));
+            }
+        }
+
+        void move() 
+        {
+            x += speed;
+            if (x > width + size / 2) 
+            {
+                x = -size / 2;
+            }
+        }
+    }
+
+    public class Flower 
+    {
+        float x, y;
+        float vx, vy;
+        float size;
+        int color;
+    
+        public Flower(float x, float y, float vx, float vy, float size, int color) 
+        {
+            this.x = x;
+            this.y = y;
+            this.vx = vx * 2;
+            this.vy = vy * 2;
+            this.size = size;
+            this.color = color;
+        }
+    
+        public void update() 
+        {
+            x += vx;
+            y += vy;
+        }
+    
+        public void display(PApplet p) 
+        {
+            p.noStroke();
+            p.fill(color);
+            float petalAngleIncrement = TWO_PI / 5; 
+            for (int i = 0; i < 5; i++) {
+                float angle = i * petalAngleIncrement;
+                float petalX = x + cos(angle) * size * 0.8f; 
+                float petalY = y + sin(angle) * size * 0.8f;
+                p.ellipse(petalX, petalY, size * 1.1f, size * 1.1f);
+            }
+        }
+    }
+
+    void startFlowers() 
+    {
+        for (int i = 0; i < 75; i++) 
+        {
+            float x = random(width);
+            float y = random(height);        
+            float vx = random(-2, 2); 
+            float vy = random(-2, 2); 
+            float size = random(20, 40); 
+            int color = color(random(255), random(255), random(255)); 
+            flowers.add(new Flower(x, y, vx, vy, size, color));
+        }
+    }
+
+
+    public void displayamber(){
+        background(0);
+        
+        image(bg, 0, 0, width, height);
+        float average = 0;
+        float sum = 0;
+        off += 1;
+
+        for (int i = 0; i < ab.size(); i++) 
+        {
+            sum += abs(ab.get(i));
+            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
+        }
+        average = sum / (float) ab.size();
+        smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
+
+        //background(152, 193, 217);
+
+        float averageAmplitude = getAverageAmplitude(ab);
+
+        float treeX1 = width / 4;
+        float treeX2 = width * 3 / 4;
+
+        float treeY1 = map(averageAmplitude, 0, 1, height * 0.7f, height * 0.9f);
+        float treeY2 = map(averageAmplitude, 0, 1, height * 0.7f, height * 0.9f);
+
+        for (Cloud c : clouds) 
+        {
+            c.move();
+            c.display();
+        }
+
+        drawTree(treeX1, treeY1, 1.5f);
+        drawTree(treeX2, treeY2, 1.5f);
+
+        if (ap.isPlaying()) 
+        {
+            int currentPosition = ap.position();
+            if (currentPosition >= 19000 && currentPosition < 45000)
+            {
+                int timeInterval = currentPosition - 19000;
+                if (timeInterval % 7000 <= 40) 
+                {
+                    startFlowers();
+                }
+            }
+
+        }
+
+        for (Flower flower : flowers) 
+        {
+            flower.update();  
+            flower.display(this); 
+        }
+
+    }
     public void draw() {
         switch (mode) {
             case 1: {
@@ -480,9 +700,11 @@ public class Allfiles extends PApplet {
                 break;
             }
             case 3: {
-                
-                
                 displayIria();
+                break;
+            }
+            case 4: {
+                displayamber();
                 break;
             }
 
