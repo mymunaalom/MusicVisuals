@@ -1,5 +1,6 @@
 package ie.tudublin;
 
+import c21404706.wissamVisual;
 import c22305863.iriaVisual;
 
 public class Main {
@@ -9,6 +10,7 @@ public class Main {
 
     public void startUI() {
         String[] a = { "MAIN" };
+
         ip = new iriaVisual(); //iriaVisual class
         processing.core.PApplet.runSketch(a, ip);
     }
@@ -30,6 +32,7 @@ public class Main {
             default:
                 break;
         }
+
     }
 
     public static void main(String[] args) {
