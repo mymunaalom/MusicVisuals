@@ -99,8 +99,8 @@ public class iriaVisual extends PApplet {
             PVector tikiPos2 = new PVector(tikiX, height / 1.50f + amplitude);
 
             // skirt
-            PVector skirtPos = new PVector(tikiX - 10, height / 3.3f + amplitude);
-            PVector skirtPos2 = new PVector(tikiX - 10, height / 1.13f + amplitude);
+            PVector skirtPos = new PVector(tikiX , height / 3.4f + amplitude);
+            PVector skirtPos2 = new PVector(tikiX , height / 1.14f + amplitude);
 
             // draw tiki face at the updated position
             image(tikiface, tikiPos.x, tikiPos.y);
