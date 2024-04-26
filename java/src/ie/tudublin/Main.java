@@ -2,44 +2,61 @@ package ie.tudublin;
 
 import c21404706.wissamVisual;
 import c22305863.iriaVisual;
+import c22368271.moonVisual;
 
-public class Main {
+import processing.core.PApplet;
+
+public class Main extends PApplet {
     iriaVisual ip;
-    wissamVisual wv;
+    wissamVisual wh;
+    moonVisual mv;
 
     int mode = 0;
 
-    public void startUI() {
-        String[] a = { "MAIN" };
-
-        ip = new iriaVisual(); //iriaVisual class
-        wv = new wissamVisual(); //wissamVisual class
-        processing.core.PApplet.runSketch(a, ip);
+    public void settings() {
+        size(800, 600);
     }
 
-    public void keyPressed() {
-        char key = ip.key;
-        switch (key) {
-            case '1':
-               
+    public void setup() {
+        ip = new iriaVisual();
+        wh = new wissamVisual();
+        mv = new moonVisual();
+    }
+
+    public void draw() {
+        switch (mode) {
+            case 1:
                 ip.setup();
-                mode = 1;
+                ip.draw();
                 break;
-            case '2':
-                wv.setup();
-             
+            case 2:
+                wh.setup();
+                wh.draw();
                 break;
-            case ' ':
-                
+            case 3:
+                mv.setup();
+                mv.draw();
                 break;
             default:
                 break;
         }
+    }
 
+    @Override
+    public void keyPressed() {
+        switch (key) {
+            case '1':
+            case '2':
+            case '3':
+                mode = Integer.parseInt(String.valueOf(key));
+                break;
+            default:
+                break;
+        }
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        main.startUI();
+        String[] a = { "ie.tudublin.Main" };
+        PApplet.runSketch(a, new Main());
     }
 }
