@@ -24,6 +24,7 @@ public class wissamVisual extends PApplet {
     float smoothedAmplitude = 0;
 
     PImage bananaPic;
+    PImage bg;
     ArrayList<Banana> bananas;
 
 
@@ -64,6 +65,8 @@ public class wissamVisual extends PApplet {
 
         bananaPic = loadImage("banana_pic.png");
         bananas = new ArrayList<Banana>();
+
+        bg = loadImage("spongeBG.png");
 
         int numBananas = 30;
         float bananaSpacing = width / (numBananas + 1); // calculate spacing between bananas
@@ -165,7 +168,7 @@ public class wissamVisual extends PApplet {
 
 
     public void draw() {
-        background(180);
+        image(bg,0,0,width,height);
         float halfH = height / 2;
         float average = 0;
         float sum = 0;
