@@ -43,7 +43,3 @@ public class Main {
         main.startUI();
     }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> c7bfb354d7015333091f1b1ee8cfb362cd906b3a
