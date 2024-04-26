@@ -206,7 +206,7 @@ public class Allfiles extends PApplet {
             float cy = height / 2;
     
             colorMode(HSB, 360, 100, 100); // mode HSB
-            background(209, 58, 100);
+            image(bg, 0, 0,width,height);
     
             reactToMouseMovement();
             for (int i = coconuts.size() - 1; i >= 0; i--) {
@@ -358,11 +358,11 @@ public class Allfiles extends PApplet {
 
             y += 2;
             if (y > height) {
-                y = 0; // coconut goes back up when it reaches the bottom
+                y = 0; // banana goes back up when it reaches the bottom
                 timesReachedEnd++;
             }
             if (timesReachedEnd >= 2) {
-                bananas.remove(this); // remove coconut from the list if reached the end twice
+                bananas.remove(this); // remove banana from the list if reached the end twice
             }
         }
     }
@@ -487,6 +487,7 @@ public class Allfiles extends PApplet {
             }
 
             default:
+                displayIria();
                 break;
         }
 
