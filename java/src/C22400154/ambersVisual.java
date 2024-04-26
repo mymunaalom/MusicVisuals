@@ -134,6 +134,7 @@ public class ambersVisual extends PApplet
                     startFlowers();
                 }
             }
+
         }
 
         for (Flower flower : flowers) 
@@ -267,7 +268,7 @@ public class ambersVisual extends PApplet
 
     void startFlowers() 
     {
-        for (int i = 0; i < 50; i++) 
+        for (int i = 0; i < 75; i++) 
         {
             float x = random(width);
             float y = random(height);        
@@ -278,6 +279,7 @@ public class ambersVisual extends PApplet
             flowers.add(new Flower(x, y, vx, vy, size, color));
         }
     }
+
 
 
     public static void main(String[] args) 
