@@ -100,9 +100,9 @@ The first shape is a line that using a for loop and adding cos and sin into the 
 |bg.png	|from spongebob|
 |Coconut class|	Self written|
 
-![An image](data/tiki_face3.png)
-![An image](data/skirt.png)
-![An image](data/spongeBG.png)
+![An image](java/data/tiki_face3.png)
+![An image](java/data/skirt.png)
+![An image](java/data/spongeBG.png)
 
 # What I am most proud of in the assignment
 Iria — 
