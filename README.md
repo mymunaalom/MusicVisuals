@@ -3,7 +3,7 @@
 Name:Wissam Hadjarab
 
 Student Number: C21404706
-
+TU858/2
 
 Name: Iria Parada Murciego
 
@@ -12,16 +12,6 @@ Student Number: c22305863
 github : iriaPM
 
 class group: TU 856 /2
-
-
-Name: Amber Kane
-
-Student Number: C22400154
-
-GitHub : C22400154
-
-Class group: TU 856/2
-
 
 ## Instructions
 - Fork this repository and use it a starter project for your assignment
@@ -39,8 +29,65 @@ For our group assignment we chose to do the music visualiser as a team. We chose
 Wissam --
 We initially worked on a seperate file each, one visiualiser each and designed and coded that section on our own.
 For my file I included different elements whilst in line with the theme. I included a background of a grid along with an imported picture of the spongebob beach background too to give it more emphasis. 
+<INCLUDE SS>
 I created a outline of the screen to go in beat and pulse with the song with different altitudes and colour to give more dimention and a 'pop' to add something to the screen that will stand out and resemble to frequencies of the audio.
-I also wanted to include a moving element onto the screen and tried to keep it with theme so I decided to make an ocean wave based on one frequency wave from the audio. I 
+for (int i = 0; i < ab.size(); i++) {
+            float cx = width / 2;
+            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
+            float hue = map(i, 0, ab.size(), 0, 256);
+            float s = lerpedBuffer[i] * cx * 2;
+
+            // from left side to right
+            stroke(40, 255, 255);
+            line(0, i, s, i);
+            // from right side to left
+            line(width, i, width - s, i);
+            // from top to bottom
+            line(i, 0, i, s);
+            // from bottom to top
+            line(i, height, i, height - s);
+<INCLUDE SS>
+I also wanted to include a moving element onto the screen and tried to keep it with theme so I decided to make an ocean wave based on one frequency wave from the audio. I implented it so that it would take the width of third of the screeen and change the colour to represent the ocean.
+<INCLUDE SS>
+	            
+        // Ocean wave parameters
+        float waveSpeed = 0.0000000000000000001f; // Speed of the waves
+        float waveAmplitude = 10; // Amplitude of the waves
+        float waveFrequency = 0.025f; // Frequency of the waves
+
+        for (int z = 0; z < width; z++) {
+            stroke(160, 255, 255); // HSB color (blue)
+            float waveHeight = sin(z * waveFrequency + off) * waveAmplitude;
+            line(z, height * 2 / 3 + waveHeight, z, height); // Drawing waves from the center of the canvas to the bottom
+        }
+To encorperate another moving element, I wanted to put something across the screen as it seemed a bit empty. I included a class to bring another imported image of bananas and put them in an list to be called in a for loop to also be in line with the music using the amplitude and calling it in the display.
+bananaPic = loadImage("banana_pic.png");
+        bananas = new ArrayList<Banana>();
+
+        bg = loadImage("spongeBG.png");
+
+        int numBananas = 30;
+        float bananaSpacing = width / (numBananas + 1); // calculate spacing between bananas
+        for (int i = 1; i <= numBananas; i++) {
+            float bananaX = i * bananaSpacing ;
+            bananas.add(new Banana(bananaX, 0)); // Add bananas to the list
+        }
+	int numBananas = 15;
+        float bananaSpacing = width / (numBananas + 1); // calculate spacing between tikis
+
+
+        for (int i = 1; i <= numBananas; i++) {
+            float bananaX  = i * bananaSpacing - 100; // Calculate X position
+
+            // move bananas with music
+            float amplitude = map(sin(frameCount * 0.05f), -1, 1, 0, ab.size() / 8);
+            float bananaY = -amplitude * 0.5f;
+            float bananaSize = map(amplitude, 0, 50, 10, 50);
+
+            float hue = map(amplitude, 0, 50, 0, 360);
+            fill(hue, 100, 100);
+
+        }
 
 Iria --
 IriaVisual is composed of a background picture that everyone in the group has, to follow the spongebob theme; Then I have two sets of images one on the top half and the other one on the bottom half, they are tiki faces with a hawaiian skirt, these images are not directly from spongebob series but they are inspired by the ‘tikiland’ song sequence.  I used PImage to display the images onto the screen, I Initialise them in a method called tiki_face(), using Pvector I was able to position the images where I wanted them to be and also allow them to move up and down with the music, using the amplitude variable and ab.size(); 
