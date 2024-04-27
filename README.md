@@ -170,14 +170,17 @@ Wissam -
 Undergoing this assignment, I am proud to have learned a lot of things. 
 In regards to the group, I am proud of the teaming working together. We didn't have specific roles but all managed our tasks together in an organized manner and set up different forms of communication like group chats and OneNote combined pages to address all our roles and make sure we were all handling our tasks to get it done.
 I am proud of learning more aspects to coding, in group and individual and learn more about functions and classes, how to efficiently use them in the code and to make sure the code is neat for all other group members to understand. I like how my visual turned out, if I had enough time I would go back an adjust small things but I am happy that it was in line with our team and was very fun getting to create something from scratch and exploring new, different and interactive ways of coding.
+
 Iria — 
 Being  honest, I am very proud about the overall visual that I made, I really like the shapes in the center and the cool effect they have especially as the music gets louder and they expand and you can see them clearly; But I am very proud about figuring out the coconuts part, I like that it makes the visualiser interactive. This was the hardest element for me as I couldnt figure out how to do this effect, at the start I coudnt get the coconuts to look properly, also at the start they would appear at random points, and then I wanted to change it to make it more interacte, thats when i made the array to make as many as the user wants and also remove then from the screen. 
 Another thing I am proud of is figuring out how to display all of the teams files together. We had been trying for days to make the switch statement in "ourvisuals.java" work but it just didn't, so last minute I made a new file and I  separated the draw() from each file into a new methos in the new “allfiles.java” file to display them all from the same file. 
 
 What I learned
+
 During the duration of this assignment I learned a variety of different things that took me a while to grasp including github. I would say that was my biggest obstacle to overcome and I still have a lot to learn but it was good have experience with it for the first time and got me to start using it.
 I learned as well fully the difference between classes and functions whilst I was setting up other elements of my visualiser as I had issues getting it to be called in the display function but worked eventually when I split the code to be in my main function and encorperated the claass.
 I also got to learn more about using external data, such as the images and sound and using it in my code and could manipulate it to do different things which I found to be cool especially with the music.
+
 Iria -
 In the process of this assignment I learned a lot more about github, like the use of branches, which we struggled at the start but we figured it out anyway. In terms of programming, it also took me some time to fully understand how all the coordinates work, although we used them in the labs, making my own shapes forced me to know how to position shapes besides being in the center of the screen. I feel like creating the shape that I wanted also forced me to use some maths concepts such as sin and cos, to make a line look like a circle or like a flower.
 
