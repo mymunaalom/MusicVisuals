@@ -305,6 +305,12 @@ These components collectively create an engaging audio visualization experience 
 ![An image](java/data/skirt.png)
 ![An image](java/data/spongeBG.png)
 
+| Class/asset | Source |
+|-----------|-----------|
+|Squidward's Tiki Land Psy-Trance Remix.mp3	|From Youtube |
+|Cloud class|	Self written|
+|Flower class|	Self written|
+
 # What I am most proud of in the assignment
 Iria — 
 Being  honest, I am very proud about the overall visual that I made, I really like the shapes in the center and the cool effect they have especially as the music gets louder and they expand and you can see them clearly; But I am very proud about figuring out the coconuts part, I like that it makes the visualiser interactive. This was the hardest element for me as I couldnt figure out how to do this effect, at the start I coudnt get the coconuts to look properly, also at the start they would appear at random points, and then I wanted to change it to make it more interacte, thats when i made the array to make as many as the user wants and also remove then from the screen. 
