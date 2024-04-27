@@ -155,7 +155,7 @@ Amber --
 
 The drawTree() function draws stylized trees using rectangles and Bezier curves. It consists of trunk and leaf shapes drawn with various vertices and Bezier curves to create a palm tree-like appearance.
 
-'''java
+```java
 	void drawTree(float x, float y, float scale) 
     {
         //trunk
@@ -193,11 +193,11 @@ The drawTree() function draws stylized trees using rectangles and Bezier curves.
         bezierVertex(x + 20 * scale, y - 20 * scale, x + 30 * scale, y - 40 * scale, x + 10 * scale, y);
         endShape(CLOSE);
     }
-'''java
+```
 
 The Cloud class defines objects representing clouds in the visualization. Each cloud has properties like position, size, and speed, and methods for display and movement. The display() method draws the cloud using ellipse shapes, while the move() method updates the cloud's position.
 
-'''java
+```java
 	class Cloud
     {
         float x, y, size, speed;
@@ -233,11 +233,11 @@ The Cloud class defines objects representing clouds in the visualization. Each c
             }
         }
     }
-'''java
+```
 
 The Flower class represents individual flowers in the visualization. Each flower has properties like position, velocity, size, and color, and methods for updating and displaying. The update() method updates the flower's position, while the display() method draws the flower as a series of ellipse shapes. The startFlowers() function generates the 75 flowers with random attributes, adding them to the display for visual enhancement.
 
-'''java
+```java
 	public class Flower 
     {
         float x, y;
@@ -288,7 +288,7 @@ The Flower class represents individual flowers in the visualization. Each flower
             flowers.add(new Flower(x, y, vx, vy, size, color));
         }
     }
-'''java
+```
 
 These components collectively create an engaging audio visualization experience within the SpongeBob theme.
 
