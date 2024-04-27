@@ -5,8 +5,11 @@ Name:Wissam Hadjarab
 Student Number: C21404706
 
 Name: Iria Parada Murciego
+
 Student Number: c22305863
+
 github : iriaPM
+
 class group: TU 856 /2
 
 ## Instructions
@@ -90,6 +93,7 @@ The first shape is a line that using a for loop and adding cos and sin into the 
 
 # List of classes/assets in the project
 | Class/asset | Source |
+|-----------|-----------|
 |Squidward's Tiki Land Psy-Trance Remix.mp3	|From Youtube |
 |Tiki_face.png| from google images|
 |skirt.png |	from google images|
