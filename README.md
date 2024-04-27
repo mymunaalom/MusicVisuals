@@ -175,8 +175,8 @@ Iria —
 Being  honest, I am very proud about the overall visual that I made, I really like the shapes in the center and the cool effect they have especially as the music gets louder and they expand and you can see them clearly; But I am very proud about figuring out the coconuts part, I like that it makes the visualiser interactive. This was the hardest element for me as I couldnt figure out how to do this effect, at the start I coudnt get the coconuts to look properly, also at the start they would appear at random points, and then I wanted to change it to make it more interacte, thats when i made the array to make as many as the user wants and also remove then from the screen. 
 Another thing I am proud of is figuring out how to display all of the teams files together. We had been trying for days to make the switch statement in "ourvisuals.java" work but it just didn't, so last minute I made a new file and I  separated the draw() from each file into a new methos in the new “allfiles.java” file to display them all from the same file. 
 
-What I learned
-
+# What I learned
+Wissam -
 During the duration of this assignment I learned a variety of different things that took me a while to grasp including github. I would say that was my biggest obstacle to overcome and I still have a lot to learn but it was good have experience with it for the first time and got me to start using it.
 I learned as well fully the difference between classes and functions whilst I was setting up other elements of my visualiser as I had issues getting it to be called in the display function but worked eventually when I split the code to be in my main function and encorperated the claass.
 I also got to learn more about using external data, such as the images and sound and using it in my code and could manipulate it to do different things which I found to be cool especially with the music.
