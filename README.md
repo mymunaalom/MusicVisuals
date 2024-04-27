@@ -149,6 +149,149 @@ In the center of the screen I have several elements, for them I used the lerped 
 
 The first shape is a line that using a for loop and adding cos and sin into the parameters make it this cool shape, that expands with the bass of the music. I also have a circle behind it that in the same way expands as the music gets louder. inside this circle I have a line that makes a circle inside it formed by multiple lines that change color with the music. For the use of color I used the HSB mode.
 
+Amber --
+
+"ambersVisual" brings the beat of "Squidward's Tiki Land Psy-Trance Remix" to life with bouncing palm trees, floating clouds, and colorful flowers. The trees dance along with the song's rhythm, while clouds drift across the screen at random speeds. When the music drops, various colourful and vibrant flowers pop up, adding bursts of color to the scene.
+
+The drawTree() function draws stylized trees using rectangles and Bezier curves. It consists of trunk and leaf shapes drawn with various vertices and Bezier curves to create a palm tree-like appearance.
+
+'''java
+	void drawTree(float x, float y, float scale) 
+    {
+        //trunk
+        fill(55, 40, 28);
+        rect(x - 10 * scale, y, 20 * scale, 150 * scale);
+    
+        //leaves 
+        fill(19, 128, 99);
+        
+        //topleft
+        beginShape();
+        vertex(x + 10 * scale, y);
+        bezierVertex(x - 50 * scale, y - 60 * scale, x - 70 * scale, y + 20 * scale, x - 50 * scale, y + 60 * scale);
+        bezierVertex(x - 20 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x, y);
+        endShape(CLOSE);
+                
+        //left
+        beginShape();
+        vertex(x - 10 * scale, y);
+        bezierVertex(x - 80 * scale, y - 30 * scale, x - 90 * scale, y + 10 * scale, x - 70 * scale, y + 50 * scale);
+        bezierVertex(x - 30 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x - 10 * scale, y);
+        endShape(CLOSE);
+        
+        //right
+        beginShape();
+        vertex(x + 10 * scale, y);
+        bezierVertex(x + 80 * scale, y - 30 * scale, x + 90 * scale, y + 10 * scale, x + 70 * scale, y + 50 * scale);
+        bezierVertex(x + 30 * scale, y + 20 * scale, x + 40 * scale, y - 10 * scale, x + 10 * scale, y);
+        endShape(CLOSE);
+
+        //topright
+        beginShape();
+        vertex(x + 10 * scale, y);
+        bezierVertex(x + 50 * scale, y - 60 * scale, x + 80 * scale, y - 20 * scale, x + 50 * scale, y + 20 * scale);
+        bezierVertex(x + 20 * scale, y - 20 * scale, x + 30 * scale, y - 40 * scale, x + 10 * scale, y);
+        endShape(CLOSE);
+    }
+'''java
+
+The Cloud class defines objects representing clouds in the visualization. Each cloud has properties like position, size, and speed, and methods for display and movement. The display() method draws the cloud using ellipse shapes, while the move() method updates the cloud's position.
+
+'''java
+	class Cloud
+    {
+        float x, y, size, speed;
+
+        Cloud(float x, float y, float size, float speed) 
+        {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.speed = speed;
+        }
+
+        void display() 
+        {
+            noStroke();
+            fill(255);
+            float angleStep = TWO_PI / 10;
+            ellipse(x, y, size * 2, size * 0.8f);
+            for (float angle = 0; angle < TWO_PI; angle += angleStep) 
+            {
+                float vx = x + cos(angle) * size;
+                float vy = y + sin(angle) * size * 0.5f;
+                ellipse(vx, vy, (float)(size * 0.8), (float)(size * 0.8));
+            }
+        }
+
+        void move() 
+        {
+            x += speed;
+            if (x > width + size / 2) 
+            {
+                x = -size / 2;
+            }
+        }
+    }
+'''java
+
+The Flower class represents individual flowers in the visualization. Each flower has properties like position, velocity, size, and color, and methods for updating and displaying. The update() method updates the flower's position, while the display() method draws the flower as a series of ellipse shapes. The startFlowers() function generates the 75 flowers with random attributes, adding them to the display for visual enhancement.
+
+'''java
+	public class Flower 
+    {
+        float x, y;
+        float vx, vy;
+        float size;
+        int color;
+    
+        public Flower(float x, float y, float vx, float vy, float size, int color) 
+        {
+            this.x = x;
+            this.y = y;
+            this.vx = vx * 2;
+            this.vy = vy * 2;
+            this.size = size;
+            this.color = color;
+        }
+    
+        public void update() 
+        {
+            x += vx;
+            y += vy;
+        }
+    
+        public void display(PApplet p) 
+        {
+            p.noStroke();
+            p.fill(color);
+            float petalAngleIncrement = TWO_PI / 5; 
+            for (int i = 0; i < 5; i++) {
+                float angle = i * petalAngleIncrement;
+                float petalX = x + cos(angle) * size * 0.8f; 
+                float petalY = y + sin(angle) * size * 0.8f;
+                p.ellipse(petalX, petalY, size * 1.1f, size * 1.1f);
+            }
+        }
+    }
+
+    void startFlowers() 
+    {
+        for (int i = 0; i < 75; i++) 
+        {
+            float x = random(width);
+            float y = random(height);        
+            float vx = random(-2, 2); 
+            float vy = random(-2, 2); 
+            float size = random(20, 40); 
+            int color = color(random(255), random(255), random(255)); 
+            flowers.add(new Flower(x, y, vx, vy, size, color));
+        }
+    }
+'''java
+
+These components collectively create an engaging audio visualization experience within the SpongeBob theme.
+
 # List of classes/assets in the project
 | Class/asset | Source |
 |-----------|-----------|
