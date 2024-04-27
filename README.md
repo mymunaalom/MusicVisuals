@@ -303,6 +303,12 @@ These components collectively create an engaging audio visualization experience 
 ![An image](java/data/skirt.png)
 ![An image](java/data/spongeBG.png)
 
+| Class/asset | Source |
+|-----------|-----------|
+|Squidward's Tiki Land Psy-Trance Remix.mp3	|From Youtube |
+|Cloud class |  Self written |
+|Flower class |  Self written |
+
 # What I am most proud of in the assignment
 Wissam -
 Undergoing this assignment, I am proud to have learned a lot of things. 
