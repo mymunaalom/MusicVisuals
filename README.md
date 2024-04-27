@@ -12,6 +12,11 @@ github : iriaPM
 
 class group: TU 856 /2
 
+Name: Amber Kane
+Student Number: C22400154
+GitHub : C22400154
+Class group: TU 856/2
+
 ## Instructions
 - Fork this repository and use it a starter project for your assignment
 - Create a new package named your student number and put all your code in this package.
