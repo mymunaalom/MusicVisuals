@@ -13,14 +13,6 @@ github : iriaPM
 
 class group: TU 856 /2
 
-Name: Amber Kane
-
-Student Number: C22400154
-
-github : C22400154
-
-class group: TU 856 /2
-
 ## Instructions
 - Fork this repository and use it a starter project for your assignment
 - Create a new package named your student number and put all your code in this package.
@@ -157,149 +149,6 @@ In the center of the screen I have several elements, for them I used the lerped 
 
 The first shape is a line that using a for loop and adding cos and sin into the parameters make it this cool shape, that expands with the bass of the music. I also have a circle behind it that in the same way expands as the music gets louder. inside this circle I have a line that makes a circle inside it formed by multiple lines that change color with the music. For the use of color I used the HSB mode.
 
-Amber --
-
-"ambersVisual" brings the beat of "Squidward's Tiki Land Psy-Trance Remix" to life with bouncing palm trees, floating clouds, and colorful flowers. The trees dance along with the song's rhythm, while clouds drift across the screen at random speeds. When the music drops, various colourful and vibrant flowers pop up, adding bursts of color to the scene.
-
-The drawTree() function draws stylized trees using rectangles and Bezier curves. It consists of trunk and leaf shapes drawn with various vertices and Bezier curves to create a palm tree-like appearance.
-
-```java
-	void drawTree(float x, float y, float scale) 
-    {
-        //trunk
-        fill(55, 40, 28);
-        rect(x - 10 * scale, y, 20 * scale, 150 * scale);
-    
-        //leaves 
-        fill(19, 128, 99);
-        
-        //topleft
-        beginShape();
-        vertex(x + 10 * scale, y);
-        bezierVertex(x - 50 * scale, y - 60 * scale, x - 70 * scale, y + 20 * scale, x - 50 * scale, y + 60 * scale);
-        bezierVertex(x - 20 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x, y);
-        endShape(CLOSE);
-                
-        //left
-        beginShape();
-        vertex(x - 10 * scale, y);
-        bezierVertex(x - 80 * scale, y - 30 * scale, x - 90 * scale, y + 10 * scale, x - 70 * scale, y + 50 * scale);
-        bezierVertex(x - 30 * scale, y + 20 * scale, x - 40 * scale, y - 10 * scale, x - 10 * scale, y);
-        endShape(CLOSE);
-        
-        //right
-        beginShape();
-        vertex(x + 10 * scale, y);
-        bezierVertex(x + 80 * scale, y - 30 * scale, x + 90 * scale, y + 10 * scale, x + 70 * scale, y + 50 * scale);
-        bezierVertex(x + 30 * scale, y + 20 * scale, x + 40 * scale, y - 10 * scale, x + 10 * scale, y);
-        endShape(CLOSE);
-
-        //topright
-        beginShape();
-        vertex(x + 10 * scale, y);
-        bezierVertex(x + 50 * scale, y - 60 * scale, x + 80 * scale, y - 20 * scale, x + 50 * scale, y + 20 * scale);
-        bezierVertex(x + 20 * scale, y - 20 * scale, x + 30 * scale, y - 40 * scale, x + 10 * scale, y);
-        endShape(CLOSE);
-    }
-```
-
-The Cloud class defines objects representing clouds in the visualization. Each cloud has properties like position, size, and speed, and methods for display and movement. The display() method draws the cloud using ellipse shapes, while the move() method updates the cloud's position.
-
-```java
-	class Cloud
-    {
-        float x, y, size, speed;
-
-        Cloud(float x, float y, float size, float speed) 
-        {
-            this.x = x;
-            this.y = y;
-            this.size = size;
-            this.speed = speed;
-        }
-
-        void display() 
-        {
-            noStroke();
-            fill(255);
-            float angleStep = TWO_PI / 10;
-            ellipse(x, y, size * 2, size * 0.8f);
-            for (float angle = 0; angle < TWO_PI; angle += angleStep) 
-            {
-                float vx = x + cos(angle) * size;
-                float vy = y + sin(angle) * size * 0.5f;
-                ellipse(vx, vy, (float)(size * 0.8), (float)(size * 0.8));
-            }
-        }
-
-        void move() 
-        {
-            x += speed;
-            if (x > width + size / 2) 
-            {
-                x = -size / 2;
-            }
-        }
-    }
-```
-
-The Flower class represents individual flowers in the visualization. Each flower has properties like position, velocity, size, and color, and methods for updating and displaying. The update() method updates the flower's position, while the display() method draws the flower as a series of ellipse shapes. The startFlowers() function generates the 75 flowers with random attributes, adding them to the display for visual enhancement.
-
-```java
-	public class Flower 
-    {
-        float x, y;
-        float vx, vy;
-        float size;
-        int color;
-    
-        public Flower(float x, float y, float vx, float vy, float size, int color) 
-        {
-            this.x = x;
-            this.y = y;
-            this.vx = vx * 2;
-            this.vy = vy * 2;
-            this.size = size;
-            this.color = color;
-        }
-    
-        public void update() 
-        {
-            x += vx;
-            y += vy;
-        }
-    
-        public void display(PApplet p) 
-        {
-            p.noStroke();
-            p.fill(color);
-            float petalAngleIncrement = TWO_PI / 5; 
-            for (int i = 0; i < 5; i++) {
-                float angle = i * petalAngleIncrement;
-                float petalX = x + cos(angle) * size * 0.8f; 
-                float petalY = y + sin(angle) * size * 0.8f;
-                p.ellipse(petalX, petalY, size * 1.1f, size * 1.1f);
-            }
-        }
-    }
-
-    void startFlowers() 
-    {
-        for (int i = 0; i < 75; i++) 
-        {
-            float x = random(width);
-            float y = random(height);        
-            float vx = random(-2, 2); 
-            float vy = random(-2, 2); 
-            float size = random(20, 40); 
-            int color = color(random(255), random(255), random(255)); 
-            flowers.add(new Flower(x, y, vx, vy, size, color));
-        }
-    }
-```
-
-These components collectively create an engaging audio visualization experience within the SpongeBob theme.
-
 # List of classes/assets in the project
 | Class/asset | Source |
 |-----------|-----------|
@@ -308,29 +157,29 @@ These components collectively create an engaging audio visualization experience 
 |skirt.png |	from google images|
 |bg.png	|from spongebob|
 |Coconut class|	Self written|
+|banana_pic.png |   from google images|
+|banana class |  Self written |
+
 
 ![An image](java/data/tiki_face3.png)
 ![An image](java/data/skirt.png)
 ![An image](java/data/spongeBG.png)
 
-| Class/asset | Source |
-|-----------|-----------|
-|Squidward's Tiki Land Psy-Trance Remix.mp3	|From Youtube |
-|Cloud class|	Self written|
-|Flower class|	Self written|
-
 # What I am most proud of in the assignment
+Wissam -
+Undergoing this assignment, I am proud to have learned a lot of things. 
+In regards to the group, I am proud of the teaming working together. We didn't have specific roles but all managed our tasks together in an organized manner and set up different forms of communication like group chats and OneNote combined pages to address all our roles and make sure we were all handling our tasks to get it done.
+I am proud of learning more aspects to coding, in group and individual and learn more about functions and classes, how to efficiently use them in the code and to make sure the code is neat for all other group members to understand. I like how my visual turned out, if I had enough time I would go back an adjust small things but I am happy that it was in line with our team and was very fun getting to create something from scratch and exploring new, different and interactive ways of coding.
 Iria — 
 Being  honest, I am very proud about the overall visual that I made, I really like the shapes in the center and the cool effect they have especially as the music gets louder and they expand and you can see them clearly; But I am very proud about figuring out the coconuts part, I like that it makes the visualiser interactive. This was the hardest element for me as I couldnt figure out how to do this effect, at the start I coudnt get the coconuts to look properly, also at the start they would appear at random points, and then I wanted to change it to make it more interacte, thats when i made the array to make as many as the user wants and also remove then from the screen. 
 Another thing I am proud of is figuring out how to display all of the teams files together. We had been trying for days to make the switch statement in "ourvisuals.java" work but it just didn't, so last minute I made a new file and I  separated the draw() from each file into a new methos in the new “allfiles.java” file to display them all from the same file. 
 
 What I learned
-
+During the duration of this assignment I learned a variety of different things that took me a while to grasp including github. I would say that was my biggest obstacle to overcome and I still have a lot to learn but it was good have experience with it for the first time and got me to start using it.
+I learned as well fully the difference between classes and functions whilst I was setting up other elements of my visualiser as I had issues getting it to be called in the display function but worked eventually when I split the code to be in my main function and encorperated the claass.
+I also got to learn more about using external data, such as the images and sound and using it in my code and could manipulate it to do different things which I found to be cool especially with the music.
+Iria -
 In the process of this assignment I learned a lot more about github, like the use of branches, which we struggled at the start but we figured it out anyway. In terms of programming, it also took me some time to fully understand how all the coordinates work, although we used them in the labs, making my own shapes forced me to know how to position shapes besides being in the center of the screen. I feel like creating the shape that I wanted also forced me to use some maths concepts such as sin and cos, to make a line look like a circle or like a flower.
-
-Amber --
-
-What I'm really proud of in this assignment is how well everything fits together. The way the visuals, like the bouncing trees and drifting clouds, match up with the music creates a really fun experience. It took some work to get it just right, but seeing it all come together and capture the vibe of SpongeBob SquarePants makes me feel proud about what I've done. Java is not my strong suit however, I feel like I learned a lot throughout this project.  I learned more about GitHub, especially how to use branches, though it was tough at first. In programming, understanding coordinates took me some time. Making my own shapes made me figure out how to position them properly on the screen as well as altering the speeds, sizes and perfecting the colours I wanted. 
 
 # Markdown Tutorial
 
