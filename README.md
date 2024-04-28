@@ -103,7 +103,7 @@ bananaPic = loadImage("banana_pic.png");
             fill(hue, 100, 100);
 
         }
-![An image](images/WissamImage.png)
+![An image](images/WissamSS.png)
 
 Iria --
 IriaVisual is composed of a background picture that everyone in the group has, to follow the spongebob theme; Then I have two sets of images one on the top half and the other one on the bottom half, they are tiki faces with a hawaiian skirt, these images are not directly from spongebob series but they are inspired by the ‘tikiland’ song sequence.  I used PImage to display the images onto the screen, I Initialise them in a method called tiki_face(), using Pvector I was able to position the images where I wanted them to be and also allow them to move up and down with the music, using the amplitude variable and ab.size(); 
@@ -165,7 +165,7 @@ In the center of the screen I have several elements, for them I used the lerped 
 
 The first shape is a line that using a for loop and adding cos and sin into the parameters make it this cool shape, that expands with the bass of the music. I also have a circle behind it that in the same way expands as the music gets louder. inside this circle I have a line that makes a circle inside it formed by multiple lines that change color with the music. For the use of color I used the HSB mode.
 
-![An image](images/IriaImage.png)
+![An image](images/IriaSS.png)
 
 Amber --
 "ambersVisual" brings the beat of "Squidward's Tiki Land Psy-Trance Remix" to life with bouncing palm trees, floating clouds, and colorful flowers. The trees dance along with the song's rhythm, while clouds drift across the screen at random speeds. When the music drops, various colourful and vibrant flowers pop up, adding bursts of color to the scene.
@@ -297,7 +297,7 @@ The Flower class represents individual flowers in the visualization. Each flower
 ```
 These components collectively create an engaging audio visualization experience within the SpongeBob theme.
 
-![An image](images/mymunaImage.png)
+![An image](images/AmberSS.png)
 
 Mymuna --
 
@@ -378,7 +378,7 @@ Within the draw() method, I created the center square, which starts as black but
 ```
 I also found a background of Bikini Bottom, which we all applied to our visuals to make them all flow into each other!
 
-![An image](images/mymunaImage.png)
+![An image](images/MymunaSS.png)
 
 
 
