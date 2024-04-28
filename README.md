@@ -435,6 +435,6 @@ Java is not my strong suit however, I feel like I learned a lot throughout this 
 Mymuna --
 I had little to no knowledge on GitHub before this project, and the little I did have was from the previous labs. In doing this project I learned a lot about it though. One thing I struggled a lot with during this project was committing, as I would always get merge conflicts and it would take me a long time to solve them. But as I progressed more and my knowledge evolved, I found myself getting less of them when I committed. This is a simple skill that I will use a lot in the future, and I'm glad I learned it from this project.
 
+[![YouTube](http://img.youtube.com/vi/-O0H-4Jyv44.jpg)](https://www.youtube.com/watch?v=-O0H-4Jyv44)
 
 
-[![YouTube](https://youtu.be/-O0H-4Jyv44?si=3AE52so2EMjYJrIK)
