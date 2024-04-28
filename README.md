@@ -435,61 +435,6 @@ Java is not my strong suit however, I feel like I learned a lot throughout this 
 Mymuna --
 I had little to no knowledge on GitHub before this project, and the little I did have was from the previous labs. In doing this project I learned a lot about it though. One thing I struggled a lot with during this project was committing, as I would always get merge conflicts and it would take me a long time to solve them. But as I progressed more and my knowledge evolved, I found myself getting less of them when I committed. This is a simple skill that I will use a lot in the future, and I'm glad I learned it from this project.
 
-# Markdown Tutorial
 
-This is *emphasis*
 
-This is a bulleted list
-
-- Item
-- Item
-
-This is a numbered list
-
-1. Item
-1. Item
-
-This is a [hyperlink](http://bryanduggan.org)
-
-# Headings
-## Headings
-#### Headings
-##### Headings
-
-This is code:
-
-```Java
-public void render()
-{
-	ui.noFill();
-	ui.stroke(255);
-	ui.rect(x, y, width, height);
-	ui.textAlign(PApplet.CENTER, PApplet.CENTER);
-	ui.text(text, x + width * 0.5f, y + height * 0.5f);
-}
-```
-
-So is this without specifying the language:
-
-```
-public void render()
-{
-	ui.noFill();
-	ui.stroke(255);
-	ui.rect(x, y, width, height);
-	ui.textAlign(PApplet.CENTER, PApplet.CENTER);
-	ui.text(text, x + width * 0.5f, y + height * 0.5f);
-}
-```
-
-This is an image using a relative URL:
-
-![An image](images/p8.png)
-
-This is an image using an absolute URL:
-
-![A different image](https://bryanduggandotorg.files.wordpress.com/2019/02/infinite-forms-00045.png?w=595&h=&zoom=2)
-
-This is a youtube video:
-
-[![YouTube](http://img.youtube.com/vi/J2kHSSFA4NU/0.jpg)](https://www.youtube.com/watch?v=J2kHSSFA4NU)
+[![YouTube]([https://www.youtube.com/watch?v=J2kHSSFA4NU](https://youtu.be/-O0H-4Jyv44?si=qs7HBORcgutKkED3))
