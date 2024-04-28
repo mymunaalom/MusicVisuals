@@ -45,7 +45,6 @@ For our group assignment we chose to do the music visualiser as a team. We chose
 Wissam --
 We initially worked on a seperate file each, one visiualiser each and designed and coded that section on our own.
 For my file I included different elements whilst in line with the theme. I included a background of a grid along with an imported picture of the spongebob beach background too to give it more emphasis. 
-<INCLUDE SS>
 I created a outline of the screen to go in beat and pulse with the song with different altitudes and colour to give more dimention and a 'pop' to add something to the screen that will stand out and resemble to frequencies of the audio.
 for (int i = 0; i < ab.size(); i++) {
             float cx = width / 2;
@@ -62,9 +61,9 @@ for (int i = 0; i < ab.size(); i++) {
             line(i, 0, i, s);
             // from bottom to top
             line(i, height, i, height - s);
-<INCLUDE SS>
+
 I also wanted to include a moving element onto the screen and tried to keep it with theme so I decided to make an ocean wave based on one frequency wave from the audio. I implented it so that it would take the width of third of the screeen and change the colour to represent the ocean.
-<INCLUDE SS>
+
 	            
         // Ocean wave parameters
         float waveSpeed = 0.0000000000000000001f; // Speed of the waves
@@ -104,6 +103,7 @@ bananaPic = loadImage("banana_pic.png");
             fill(hue, 100, 100);
 
         }
+![An image](images/WissamImage)
 
 Iria --
 IriaVisual is composed of a background picture that everyone in the group has, to follow the spongebob theme; Then I have two sets of images one on the top half and the other one on the bottom half, they are tiki faces with a hawaiian skirt, these images are not directly from spongebob series but they are inspired by the ‘tikiland’ song sequence.  I used PImage to display the images onto the screen, I Initialise them in a method called tiki_face(), using Pvector I was able to position the images where I wanted them to be and also allow them to move up and down with the music, using the amplitude variable and ab.size(); 
@@ -164,6 +164,8 @@ For the coconuts to appear on screen I made a method(outside of the coconut clas
 In the center of the screen I have several elements, for them I used the lerped buffer and smoothed amplitude that we used in the labs to make the shapes expand with the music. 
 
 The first shape is a line that using a for loop and adding cos and sin into the parameters make it this cool shape, that expands with the bass of the music. I also have a circle behind it that in the same way expands as the music gets louder. inside this circle I have a line that makes a circle inside it formed by multiple lines that change color with the music. For the use of color I used the HSB mode.
+
+![An image](images/IriaImage)
 
 Amber --
 "ambersVisual" brings the beat of "Squidward's Tiki Land Psy-Trance Remix" to life with bouncing palm trees, floating clouds, and colorful flowers. The trees dance along with the song's rhythm, while clouds drift across the screen at random speeds. When the music drops, various colourful and vibrant flowers pop up, adding bursts of color to the scene.
@@ -295,6 +297,8 @@ The Flower class represents individual flowers in the visualization. Each flower
 ```
 These components collectively create an engaging audio visualization experience within the SpongeBob theme.
 
+![An image](images/amberSS)
+
 Mymuna --
 
 moonVisual brings you straight into Bikini Bottom, the mysterious flower's native to the town can be seen pulsing to the beat of Squidward's Tiki Land Psy-Trance Remix.
@@ -373,6 +377,8 @@ Within the draw() method, I created the center square, which starts as black but
 
 ```
 I also found a background of Bikini Bottom, which we all applied to our visuals to make them all flow into each other!
+
+![An image](images/mymunaImage)
 
 
 
