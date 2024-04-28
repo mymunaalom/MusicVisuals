@@ -297,7 +297,7 @@ The Flower class represents individual flowers in the visualization. Each flower
 ```
 These components collectively create an engaging audio visualization experience within the SpongeBob theme.
 
-![An image](images/amberSS.png)
+![An image](images/mymunaImage.png)
 
 Mymuna --
 
