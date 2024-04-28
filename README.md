@@ -21,6 +21,14 @@ github : C22400154
 
 class group: TU 856 /2
 
+Name: Mymuna Alom Munma
+
+Student Number: C22368271
+
+GitHub: mymunaalom
+
+Class Group: TU856/2
+
 ## Instructions
 - Fork this repository and use it a starter project for your assignment
 - Create a new package named your student number and put all your code in this package.
@@ -287,6 +295,87 @@ The Flower class represents individual flowers in the visualization. Each flower
 ```
 These components collectively create an engaging audio visualization experience within the SpongeBob theme.
 
+Mymuna --
+
+moonVisual brings you straight into Bikini Bottom, the mysterious flower's native to the town can be seen pulsing to the beat of Squidward's Tiki Land Psy-Trance Remix.
+In the flowers() class, I used an image with a transparent background to bring it to life. To get the flowers to move with the song, I used the map function, and used my knowledge of angles to put them in a ring depending on the number of flowers used.
+
+```java
+
+    public void flowers(float amplitude) {
+        int numflowers = 7;
+        float angleIn = TWO_PI / numflowers;
+
+        float flowerSize = map(amplitude, 0, 1, 10, 100);
+
+        for (int i = 0; i < numflowers; i++) {
+            float angle = i * angleIn;
+            float radius = flowerSize * (i + 10);
+            float flowerPosX = width / 2 + cos(angle) * radius-100;
+            float flowerPosY = height / 2 + sin(angle) * radius-100;
+            image(flower, flowerPosX, flowerPosY, flower.width / 6, flower.height / 6);
+        }
+    }
+
+```
+
+The drawStrobeLights() function uses ellipses to create a ring of strobing lights of every colour in the rainbow! I hhave variables for the number of lights, the distance between each light, the radius of each ellipse, their coordinates, their size and, of course, their colours as well. I caluclated the colour of each ellipse based on the timing. The size of the ellipses change depending on the beat of the song, which I used smoothedAmplitude for.
+
+```java
+
+    void drawStrobeLights() {
+        int numLights = 20; 
+        float angleStep = TWO_PI / numLights;
+        float radius = min(width, height) * 0.4f;
+        float centerX = width / 2;
+        float centerY = height / 2;
+    
+        for (int i = 0; i < numLights; i++) {
+            
+            float x = centerX + cos(angleStep * i) * radius;
+            float y = centerY + sin(angleStep * i) * radius;
+    
+           
+            float lightSize = map(smoothedAmplitude, 0, 1, 10, 50);
+    
+           
+            int lightColor = color((frameCount + i * 10) % 255, 255, 255);
+    
+           
+            fill(lightColor);
+            stroke(lightColor);
+
+            ellipse(x, y, lightSize, lightSize);
+        }
+    }
+
+```
+
+Within the draw() method, I created the center square, which starts as black but eventually fills with different colours and gradually increases in size with the beat of the song. For this, I used Fast Fourier Transforms and Bands. I got the waveAmplitude using the map() function, which is used to get the coordinates of the wave in the square.
+
+```java
+
+        float squareSize = map(smoothedAmplitude, 0, 1, 10, 400);
+        float squareX = width / 2 - squareSize / 2;
+        float squareY = height / 2 - squareSize / 2;
+        int rainbowColor = color((frameCount / 2) % 255, (frameCount / 3) % 255, (frameCount / 4) % 255);
+        stroke(rainbowColor);
+        fill(0);
+        rect(squareX, squareY, squareSize, squareSize);
+
+        float waveAmplitude = map(smoothedAmplitude, 0, 1, 0, squareSize / 2);
+        fft.forward(ap.mix);
+        for (int i = 0; i < fft.specSize(); i++) {
+            float x = map(i, 0, fft.specSize(), squareX, squareX + squareSize);
+            float y = squareY + squareSize / 2 + fft.getBand(i) * waveAmplitude;
+            point(x, y);
+        }
+
+```
+I also found a background of Bikini Bottom, which we all applied to our visuals to make them all flow into each other!
+
+
+
 # List of classes/assets in the project
 | Class/asset | Source |
 |-----------|-----------|
@@ -322,6 +411,9 @@ Another thing I am proud of is figuring out how to display all of the teams file
 Amber --
 What I'm really proud of in this assignment is how well everything fits together. The way the visuals, like the bouncing trees and drifting clouds, match up with the music creates a really fun experience. It took some work to get it just right, but seeing it all come together and capture the vibe of SpongeBob SquarePants makes me feel proud about what I've done.
 
+Mymuna --
+I'm really proud of myself as I find OOP to be one of the hardest and demanding module's yet. I would spend hours on the labs, and I'm so happy that I was able to pump out a visual like the one I created. It took me a long time to figure out the flowers and how to get them perfect, I probably fiddled with them for a few days, and when I finally got them how I wanted it, I was elated. I'm just so incredibly proud of myself for being able to complete this project, and I'm happy I was able to do it with my friends :)
+
 # What I learned
 Wissam -
 During the duration of this assignment I learned a variety of different things that took me a while to grasp including github. I would say that was my biggest obstacle to overcome and I still have a lot to learn but it was good have experience with it for the first time and got me to start using it.
@@ -333,6 +425,9 @@ In the process of this assignment I learned a lot more about github, like the us
 
 Amber --
 Java is not my strong suit however, I feel like I learned a lot throughout this project.  I learned more about GitHub, especially how to use branches, though it was tough at first. In programming, understanding coordinates took me some time. Making my own shapes made me figure out how to position them properly on the screen as well as altering the speeds, sizes and perfecting the colours I wanted. 
+
+Mymuna --
+I had little to no knowledge on GitHub before this project, and the little I did have was from the previous labs. In doing this project I learned a lot about it though. One thing I struggled a lot with during this project was committing, as I would always get merge conflicts and it would take me a long time to solve them. But as I progressed more and my knowledge evolved, I found myself getting less of them when I committed. This is a simple skill that I will use a lot in the future, and I'm glad I learned it from this project.
 
 # Markdown Tutorial
 
